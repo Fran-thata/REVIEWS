@@ -31,23 +31,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 font-sans selection:bg-brand-200">
+    <div className="min-h-screen bg-brand-950 text-white font-sans selection:bg-brand-500 selection:text-white">
       
-      {/* Navigation Bar */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`}>
+      {/* Navigation Bar - Premium Dark Glass */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-950/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-          <div className={`font-bold text-xl tracking-tight flex items-center gap-2 ${isScrolled ? 'text-brand-900' : 'text-white'}`}>
-             <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-white font-extrabold text-lg">G</span>
+          <div className="font-bold text-xl tracking-tight flex items-center gap-3">
+             <div className="w-10 h-10 bg-gradient-to-tr from-brand-600 to-brand-400 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 ring-1 ring-white/10">
+                <span className="text-white font-extrabold text-xl">G</span>
              </div>
-             <span>GoogleBoost</span>
+             <span className="text-white">GoogleBoost</span>
           </div>
           <button 
             onClick={() => scrollToSection('pricing')}
-            className={`hidden md:block px-6 py-2 rounded-full font-bold text-sm transition-all transform hover:scale-105 ${
+            className={`hidden md:block px-8 py-3 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-lg ${
               isScrolled 
-                ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-lg shadow-brand-200' 
-                : 'bg-white text-brand-900 hover:bg-gray-100 shadow-lg'
+                ? 'bg-white text-brand-950 hover:bg-brand-50' 
+                : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-md border border-white/10'
             }`}
           >
             Ver Packs

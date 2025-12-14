@@ -1,46 +1,85 @@
 import React, { useState } from 'react';
 import { 
   Star, 
-  Smartphone, 
   CheckCircle, 
   XCircle, 
-  MessageCircle, 
   ShieldCheck, 
-  Zap,
-  ChevronDown,
-  ChevronUp,
-  Award,
-  Users,
-  Briefcase,
-  Settings,
-  HelpCircle,
+  ChevronDown, 
+  ChevronUp, 
   Layout,
   CreditCard,
-  MapPin
+  Settings,
+  Users,
+  Briefcase
 } from 'lucide-react';
+
+// --- Custom Animations Style Component ---
+const AnimationStyles = () => (
+  <style>{`
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes whatsapp-wiggle {
+      0%, 85% { transform: rotate(0deg) scale(1); }
+      87% { transform: rotate(-12deg) scale(1.15); }
+      89% { transform: rotate(12deg) scale(1.15); }
+      91% { transform: rotate(-12deg) scale(1.15); }
+      93% { transform: rotate(12deg) scale(1.15); }
+      95% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+    .animate-marquee {
+      animation: marquee 30s linear infinite;
+    }
+    .animate-whatsapp {
+      animation: whatsapp-wiggle 4s ease-in-out infinite;
+      transform-origin: center;
+    }
+    /* Pause animation on hover for better UX */
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+  `}</style>
+);
 
 // --- Shared UI Components ---
 
-const SectionTitle = ({ children, className = "", dark = false }: { children?: React.ReactNode, className?: string, dark?: boolean }) => (
-  <h2 className={`text-3xl md:text-4xl font-extrabold mb-6 text-center leading-tight ${dark ? 'text-white' : 'text-brand-900'} ${className}`}>
+const GoogleLogo = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5">
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+  </svg>
+);
+
+const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.374-5.03c0-5.445 4.431-9.878 9.878-9.878 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.444-4.435 9.878-9.88 9.878m0-11.423a1.542 1.542 0 11.002 3.084 1.542 1.542 0 01-.002-3.084" />
+  </svg>
+);
+
+const SectionTitle = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
+  <h2 className={`text-3xl md:text-5xl font-extrabold mb-6 text-center leading-tight tracking-tight text-white ${className}`}>
     {children}
   </h2>
 );
 
-const SectionSubtitle = ({ children, className = "", dark = false }: { children?: React.ReactNode, className?: string, dark?: boolean }) => (
-  <p className={`text-lg md:text-xl max-w-3xl mx-auto text-center mb-12 font-medium ${dark ? 'text-brand-100' : 'text-gray-600'} ${className}`}>
+const SectionSubtitle = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => (
+  <p className={`text-lg md:text-xl max-w-3xl mx-auto text-center mb-16 font-medium leading-relaxed text-brand-100/80 ${className}`}>
     {children}
   </p>
 );
 
 const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", variant = "primary" }: { text?: string, className?: string, variant?: 'primary' | 'outline' | 'white' | 'brand' }) => {
-  const baseClasses = "inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 active:scale-95 shadow-xl";
+  const baseClasses = "inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl group";
   
   const variants = {
-    primary: "bg-green-500 hover:bg-green-600 text-white shadow-green-200/50",
-    brand: "bg-brand-600 hover:bg-brand-500 text-white shadow-brand-200/50",
-    outline: "border-2 border-brand-600 text-brand-600 hover:bg-brand-50 bg-white",
-    white: "bg-white text-brand-900 hover:bg-gray-100 shadow-lg"
+    primary: "bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-green-900/50",
+    brand: "bg-brand-600 hover:bg-brand-500 text-white shadow-brand-900/50",
+    outline: "border-2 border-brand-400 text-brand-400 hover:bg-brand-900/50 bg-transparent",
+    white: "bg-white text-brand-950 hover:bg-brand-50 shadow-lg"
   };
 
   return (
@@ -50,7 +89,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
       rel="noopener noreferrer"
       className={`${baseClasses} ${variants[variant]} ${className}`}
     >
-      <MessageCircle size={24} className={variant === 'white' ? 'text-green-500' : 'text-white'} />
+      <WhatsAppIcon className={`w-5 h-5 ${variant !== 'outline' ? 'animate-whatsapp' : 'group-hover:animate-whatsapp'}`} />
       {text}
     </a>
   );
@@ -60,35 +99,58 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 
 export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
   return (
-    <section className="relative bg-brand-900 text-white pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Abstract Background Shapes */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600 rounded-full blur-[120px] opacity-20 -mr-20 -mt-20 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500 rounded-full blur-[100px] opacity-10 -ml-20 -mb-20 pointer-events-none"></div>
+    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-36 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+      <AnimationStyles />
+      {/* Background Decor - Deep Blue Vibes */}
+      <div className="absolute top-0 right-0 w-full h-full opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-600/20 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+          
           <div className="lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              Multiplica tus reseñas en Google y conviértelas en <span className="text-brand-400">más clientes</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 text-white tracking-tight drop-shadow-lg">
+              Multiplica tus reseñas en Google y conviértelas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">más clientes</span>
             </h1>
-            <p className="text-lg md:text-xl text-brand-100 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-brand-100 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90">
               Las malas reseñas llegan solas. Las buenas se piden en el momento exacto.
               Nuestra Placa para reseñas hace que el cliente valore en segundos, sin pensarlo, justo cuando está más satisfecho.
             </p>
             
-            {/* Key Benefits */}
-            <div className="space-y-3 mb-10 text-left max-w-md mx-auto lg:mx-0 bg-brand-800/30 p-6 rounded-2xl border border-brand-700/50 backdrop-blur-sm">
-              <div className="flex items-center gap-3">
-                <Zap className="text-yellow-400 shrink-0" size={20} />
-                <span className="font-semibold text-brand-50">Instantáneo: Acerca el móvil y valora en 1 segundo.</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckCircle className="text-green-400 shrink-0" size={20} />
-                <span className="font-semibold text-brand-50">Llave en Mano: Llega configurado y listo.</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="text-brand-300 shrink-0" size={20} />
-                <span className="font-semibold text-brand-50">Sin Ataduras: Pago único de por vida.</span>
+            {/* NEW: Scrolling Marquee (Tools Strip) */}
+            <div className="mb-12 flex flex-col items-center lg:items-start gap-4">
+              <span className="text-xs font-bold text-brand-300 uppercase tracking-widest pl-1">Menos herramientas, más resultados:</span>
+              
+              <div className="w-full max-w-xl relative overflow-hidden bg-brand-900/20 border border-white/10 rounded-2xl py-3 backdrop-blur-md">
+                   {/* Gradient Masks for smooth fade edges */}
+                   <div className="absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-brand-900 via-brand-900/80 to-transparent"></div>
+                   <div className="absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-brand-900 via-brand-900/80 to-transparent"></div>
+
+                   <div className="flex gap-12 animate-marquee w-max">
+                       {/* Duplicated content to create infinite seamless loop */}
+                       {[...Array(12)].map((_, i) => (
+                           <React.Fragment key={i}>
+                               {/* Item 1: Google */}
+                               <div className="flex items-center gap-3 shrink-0">
+                                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                       <GoogleLogo />
+                                   </div>
+                                   <span className="text-white font-bold text-lg tracking-tight">Google</span>
+                               </div>
+
+                               {/* Item 2: Stars */}
+                               <div className="flex items-center gap-3 shrink-0">
+                                   <div className="flex gap-0.5">
+                                       {[1,2,3,4,5].map(star => (
+                                           <Star key={star} size={16} className="fill-yellow-400 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" />
+                                       ))}
+                                   </div>
+                                   <span className="text-brand-100 font-medium text-sm">Reseñas 5 estrellas</span>
+                               </div>
+                           </React.Fragment>
+                       ))}
+                   </div>
               </div>
             </div>
 
@@ -98,24 +160,28 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
           </div>
           
           <div className="lg:w-1/2 relative flex justify-center">
-             {/* Product Visualization - Cleaner Look */}
-             <div className="relative w-full max-w-md">
-                <div className="absolute inset-0 bg-gradient-to-tr from-brand-600 to-blue-400 rounded-full blur-[60px] opacity-30 animate-pulse"></div>
-                <img 
-                  src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" 
-                  alt="Cliente usando NFC en expositor" 
-                  className="relative z-10 w-full h-auto rounded-3xl shadow-2xl border border-brand-700/50 object-cover aspect-square"
-                />
-                
-                {/* Float Card */}
-                <div className="absolute -bottom-6 -left-6 bg-white text-brand-900 p-5 rounded-2xl shadow-xl z-20 flex items-center gap-4 max-w-xs animate-bounce" style={{ animationDuration: '3s' }}>
-                   <div className="bg-green-100 p-3 rounded-full">
-                     <Star className="text-green-600 fill-green-600" size={24} />
-                   </div>
-                   <div>
-                     <p className="font-bold text-sm">Reseña Verificada</p>
-                     <p className="text-xs text-gray-500">Recibida hace 2 min</p>
-                   </div>
+             <div className="relative w-full max-w-lg">
+                <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
+                {/* Image Frame Style - Dark Premium */}
+                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm">
+                    <img 
+                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop" 
+                      alt="Cliente usando NFC en expositor" 
+                      className="w-full h-auto rounded-[2rem] object-cover aspect-[4/3] opacity-90 hover:opacity-100 transition-opacity"
+                    />
+                    
+                    {/* Floating Element */}
+                    <div className="absolute -bottom-8 right-8 bg-brand-900/90 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-white/20 max-w-xs animate-bounce" style={{ animationDuration: '4s' }}>
+                      <div className="flex items-center gap-3">
+                         <div className="bg-green-500/20 p-2.5 rounded-full border border-green-500/30">
+                           <CheckCircle className="text-green-400" size={20} />
+                         </div>
+                         <div>
+                           <p className="font-bold text-white text-sm">Reseña Recibida</p>
+                           <p className="text-xs text-brand-200 font-medium">Hace 1 momento</p>
+                         </div>
+                      </div>
+                    </div>
                 </div>
              </div>
           </div>
@@ -127,7 +193,10 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
 
 export const Comparison: React.FC = () => {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-brand-950 relative">
+      {/* Divider Gradient */}
+      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-brand-950 to-transparent pointer-events-none"></div>
+
       <div className="container mx-auto px-4">
         <SectionTitle>En Google solo existen dos tipos de negocio:</SectionTitle>
         <SectionSubtitle>
@@ -135,48 +204,51 @@ export const Comparison: React.FC = () => {
         </SectionSubtitle>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mt-12">
-          {/* Negative Scenario */}
-          <div className="bg-white p-10 rounded-3xl shadow-sm border-2 border-red-100 hover:border-red-200 transition-colors">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
+          {/* Card 1 - Dark/Negative */}
+          <div className="bg-brand-900/50 p-10 rounded-[2.5rem] border border-white/5 hover:border-red-500/30 transition-all duration-300 group backdrop-blur-sm">
+            <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-red-500/20">
               <XCircle className="text-red-500" size={32} />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">🛑 El negocio que pasa desapercibido</h3>
-            <div className="space-y-4 text-gray-600 mb-8">
-              <p className="flex gap-3"><span className="text-red-400 font-bold">•</span> Pocas reseñas, desactualizadas o incoherentes.</p>
-              <p className="flex gap-3"><span className="text-red-400 font-bold">•</span> Das buen servicio, pero Google solo muestra reseñas antiguas.</p>
-              <p className="flex gap-3"><span className="text-red-400 font-bold">•</span> El cliente piensa: “Si nadie comenta… por algo será.”</p>
+            <h3 className="text-2xl font-bold text-white mb-4">🛑 El negocio que pasa desapercibido</h3>
+            <div className="space-y-4 text-slate-400 mb-8 font-medium">
+              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Pocas reseñas, desactualizadas o incoherentes.</p>
+              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Das buen servicio, pero Google solo muestra reseñas antiguas.</p>
+              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> El cliente piensa: “Si nadie comenta… por algo será.”</p>
             </div>
-            <div className="p-4 bg-red-50 rounded-xl border border-red-100">
-              <p className="text-red-800 font-semibold text-sm">
+            <div className="p-5 bg-red-950/30 rounded-2xl border border-red-500/20">
+              <p className="text-red-300 font-semibold text-sm">
                 Consecuencia: elige otro local y tú ni te enteras, pierdes la venta sin saber por qué.
               </p>
             </div>
           </div>
 
-          {/* Positive Scenario */}
-          <div className="bg-white p-10 rounded-3xl shadow-xl border-2 border-green-500 relative transform md:-translate-y-4">
-            <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-xl uppercase tracking-wider">
+          {/* Card 2 - Premium Highlight / Positive */}
+          <div className="bg-gradient-to-br from-brand-800 to-brand-900 p-10 rounded-[2.5rem] border border-brand-500/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 relative group overflow-hidden">
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/20 rounded-full blur-[80px] -mr-16 -mt-16 pointer-events-none"></div>
+
+            <div className="absolute top-6 right-6 bg-green-500/20 text-green-300 text-xs font-bold px-3 py-1 rounded-full border border-green-500/30 uppercase tracking-wider">
               El objetivo
             </div>
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-              <CheckCircle className="text-green-600" size={32} />
+            <div className="w-16 h-16 bg-brand-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-brand-400/20 relative z-10">
+              <Star className="text-brand-300 fill-brand-300" size={32} />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">🟢 El negocio que inspira confianza</h3>
-            <div className="space-y-4 text-gray-600 mb-8">
-              <p className="flex gap-3"><span className="text-green-500 font-bold">•</span> Reseñas nuevas cada semana.</p>
-              <p className="flex gap-3"><span className="text-green-500 font-bold">•</span> Ficha activa que trabaja 24/7 por ti.</p>
-              <p className="flex gap-3"><span className="text-green-500 font-bold">•</span> El cliente piensa: “Buen servicio + buenas reseñas = aquí acierto.”</p>
+            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">🟢 El negocio que inspira confianza</h3>
+            <div className="space-y-4 text-brand-100 mb-8 font-medium relative z-10">
+              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> Reseñas nuevas cada semana.</p>
+              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> Ficha activa que trabaja 24/7 por ti.</p>
+              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> El cliente piensa: “Buen servicio + buenas reseñas = aquí acierto.”</p>
             </div>
-            <div className="p-4 bg-green-50 rounded-xl border border-green-200">
-              <p className="text-green-800 font-semibold text-sm">
+            <div className="p-5 bg-green-900/20 rounded-2xl border border-green-500/20 relative z-10 backdrop-blur-md">
+              <p className="text-green-300 font-semibold text-sm">
                 Consecuencia: entra decidido, confía antes de conocerte, ganas ventas sin esfuerzo extra.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="text-center mt-12">
-           <p className="text-xl font-bold text-brand-800">La diferencia no es tu servicio, es lo visible que lo haces en Google.</p>
+        <div className="text-center mt-16">
+           <p className="text-2xl font-bold text-white">La diferencia no es tu servicio, es lo visible que lo haces en Google.</p>
         </div>
       </div>
     </section>
@@ -185,83 +257,102 @@ export const Comparison: React.FC = () => {
 
 export const HowItWorks: React.FC = () => {
   return (
-    <section className="py-24 bg-brand-50">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-brand-900 border-t border-white/5 relative overflow-hidden">
+      {/* Subtle Pattern */}
+      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <SectionTitle>Cómo funciona en 3 pasos</SectionTitle>
         <SectionSubtitle>
           Olvídate de apps o configuraciones raras. En tres pasos ya estás generando reseñas.
         </SectionSubtitle>
 
         {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-24">
            {[
-             { num: "1", title: "Pides tu pack", desc: "Rellenas un formulario rápido: en menos de 1 minuto." },
-             { num: "2", title: "Lo dejamos perfecto", desc: "Todo configurado y enlazado a tu ficha de Google. No tocas nada." },
-             { num: "3", title: "Empieza a trabajar", desc: "Lo colocas en tu mostrador, y ese mismo día ya puedes ganar visibilidad." }
+             { num: "01", title: "Pides tu pack", desc: "Rellenas un formulario rápido: en menos de 1 minuto." },
+             { num: "02", title: "Lo dejamos perfecto", desc: "Todo configurado y enlazado a tu ficha de Google. No tocas nada." },
+             { num: "03", title: "Empieza a trabajar", desc: "Lo colocas en tu mostrador, y ese mismo día ya puedes ganar visibilidad." }
            ].map((step, idx) => (
-             <div key={idx} className="relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                <div className="absolute -top-4 -left-4 w-10 h-10 bg-brand-600 text-white rounded-lg font-bold flex items-center justify-center text-lg shadow-lg">
-                  {step.num}
-                </div>
-                <h4 className="text-xl font-bold text-brand-900 mb-3 mt-2">{step.title}</h4>
-                <p className="text-gray-600">{step.desc}</p>
+             <div key={idx} className="relative bg-brand-800/50 p-8 rounded-3xl border border-white/5 hover:bg-brand-800 transition-colors backdrop-blur-md">
+                <div className="text-4xl font-extrabold text-white/20 mb-4">{step.num}</div>
+                <h4 className="text-xl font-bold text-white mb-3">{step.title}</h4>
+                <p className="text-brand-200/70 font-medium leading-relaxed">{step.desc}</p>
              </div>
            ))}
         </div>
 
-        {/* Products Showcase */}
-        <div className="space-y-12 max-w-5xl mx-auto">
+        {/* Products Showcase - Dark Cards */}
+        <div className="space-y-8 max-w-6xl mx-auto">
           
           {/* Expositor */}
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-md flex flex-col md:flex-row items-center gap-10 border-l-8 border-green-500">
-            <div className="md:w-1/3 flex justify-center">
-               <div className="w-48 h-48 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400">
-                  {/* Placeholder for Product Image */}
-                  <Layout size={64} className="text-brand-200" />
+          <div className="bg-brand-800 rounded-[2.5rem] p-8 md:p-14 border border-white/5 flex flex-col md:flex-row items-center gap-12 shadow-2xl relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-600/10 rounded-full blur-[80px] -mr-20 -mt-20"></div>
+            
+            <div className="md:w-1/3 flex justify-center relative z-10">
+               <div className="w-64 h-64 bg-brand-900 rounded-3xl flex items-center justify-center text-brand-700 border border-white/5 shadow-inner">
+                  <Layout size={80} className="text-brand-600" />
                </div>
             </div>
-            <div className="md:w-2/3">
-               <h3 className="text-2xl font-bold text-brand-900 mb-4 flex items-center gap-3">
-                 <span className="w-3 h-3 rounded-full bg-green-500"></span>
+            <div className="md:w-2/3 relative z-10">
+               <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-green-500/20 border border-green-500/30 text-green-300 text-xs font-bold uppercase tracking-wider mb-4">
+                  Recomendado
+               </div>
+               <h3 className="text-3xl font-extrabold text-white mb-6">
                  EL EXPOSITOR (Tu imán silencioso)
                </h3>
-               <ul className="space-y-3 mb-6">
-                 <li className="flex gap-3 text-gray-700"><CheckCircle size={20} className="text-brand-500 shrink-0"/> Perfecto para el mostrador.</li>
-                 <li className="flex gap-3 text-gray-700"><CheckCircle size={20} className="text-brand-500 shrink-0"/> Funciona solo, sin hablar por ti.</li>
-                 <li className="flex gap-3 text-gray-700"><CheckCircle size={20} className="text-brand-500 shrink-0"/> Convierte el momento de pago en una reseña natural.</li>
-                 <li className="flex gap-3 text-gray-700"><CheckCircle size={20} className="text-brand-500 shrink-0"/> Siempre visible. Siempre activo.</li>
+               <ul className="space-y-4 mb-8">
+                 {[
+                   "Perfecto para el mostrador.",
+                   "Funciona solo, sin hablar por ti.",
+                   "Convierte el momento de pago en una reseña natural.",
+                   "Siempre visible. Siempre activo."
+                 ].map((item, i) => (
+                   <li key={i} className="flex items-center gap-4 text-brand-100 font-medium">
+                     <div className="w-6 h-6 rounded-full bg-brand-600/30 flex items-center justify-center shrink-0 border border-brand-500/30">
+                       <CheckCircle size={14} className="text-brand-400"/>
+                     </div>
+                     {item}
+                   </li>
+                 ))}
                </ul>
-               <p className="font-bold text-brand-700">Cliente satisfecho = Reseña asegurada</p>
+               <p className="text-lg font-bold text-brand-200 bg-white/5 inline-block px-6 py-3 rounded-xl border border-white/10">
+                 Cliente satisfecho = Reseña asegurada
+               </p>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Tarjeta Profesional */}
-            <div className="bg-white rounded-3xl p-8 shadow-md border-t-8 border-yellow-400">
-               <h3 className="text-xl font-bold text-brand-900 mb-4 flex items-center gap-3">
-                 <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+            <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
+               <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6 border border-yellow-500/20">
+                  <Star className="text-yellow-500 fill-yellow-500" size={24} />
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-2">
                  TARJETA PROFESIONAL
                </h3>
-               <p className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">Confianza + reseñas</p>
-               <p className="text-gray-600 mb-4">
+               <p className="text-sm font-bold text-brand-400 mb-6 uppercase tracking-wide">Confianza + reseñas</p>
+               <p className="text-brand-200/80 mb-8 leading-relaxed">
                  Pensada para profesionales por cita: salud, bienestar, imagen y servicios 1 a 1. 
                  Al final de la sesión, cuando el cliente está satisfecho, consigues una reseña de calidad.
                </p>
-               <p className="font-bold text-brand-700 mt-auto">Trato 1 a 1 = Reseña premium</p>
+               <p className="font-bold text-white border-t border-white/10 pt-6">Trato 1 a 1 = Reseña premium</p>
             </div>
 
             {/* Tarjeta Equipo */}
-            <div className="bg-white rounded-3xl p-8 shadow-md border-t-8 border-blue-500">
-               <h3 className="text-xl font-bold text-brand-900 mb-4 flex items-center gap-3">
-                 <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+            <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
+               <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
+                  <Users className="text-blue-400" size={24} />
+               </div>
+               <h3 className="text-2xl font-bold text-white mb-2">
                  TARJETA DE EQUIPO
                </h3>
-               <p className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">Tu generador en caliente</p>
-               <p className="text-gray-600 mb-4">
+               <p className="text-sm font-bold text-brand-400 mb-6 uppercase tracking-wide">Tu generador en caliente</p>
+               <p className="text-brand-200/80 mb-8 leading-relaxed">
                  Pensada para camareros, repartidores y personal de atención directa. 
                  Se pide en el momento perfecto: mesa, barra o entrega del servicio.
                </p>
-               <p className="font-bold text-brand-700 mt-auto">Trato cercano = Reseña al momento</p>
+               <p className="font-bold text-white border-t border-white/10 pt-6">Trato cercano = Reseña al momento</p>
             </div>
           </div>
 
@@ -273,7 +364,7 @@ export const HowItWorks: React.FC = () => {
 
 export const SocialProof: React.FC = () => {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-brand-950 border-t border-white/5">
       <div className="container mx-auto px-4">
         <SectionTitle>No importa lo que decimos nosotros, importa lo que consiguen ellos.</SectionTitle>
         <SectionSubtitle>
@@ -282,45 +373,47 @@ export const SocialProof: React.FC = () => {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
            {/* Case 1 */}
-           <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-              <div className="flex items-center gap-4 mb-6">
-                 <div className="w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold">R</div>
-                 <h3 className="text-xl font-bold text-brand-900">CASO 1 — Restaurante/local físico</h3>
+           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
+              <div className="flex items-center gap-4 mb-8">
+                 <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">R</div>
+                 <h3 className="text-xl font-bold text-white">Restaurante/local físico</h3>
               </div>
-              <div className="space-y-4">
-                 <div className="flex gap-3">
-                    <span className="font-bold text-red-500 min-w-[100px]">El problema:</span>
-                    <span className="text-gray-600">Clientes contentos, 16 reseñas en 2 años.</span>
+              <div className="space-y-6">
+                 <div className="flex flex-col gap-1">
+                    <span className="text-xs font-bold text-red-400 uppercase tracking-wide">El problema</span>
+                    <span className="text-slate-300 font-medium">Clientes contentos, 16 reseñas en 2 años.</span>
                  </div>
-                 <div className="flex gap-3">
-                    <span className="font-bold text-blue-500 min-w-[100px]">El cambio:</span>
-                    <span className="text-gray-600">Expositor colocado en el mostrador.</span>
+                 <div className="w-full h-px bg-white/10"></div>
+                 <div className="flex flex-col gap-1">
+                    <span className="text-xs font-bold text-brand-400 uppercase tracking-wide">El cambio</span>
+                    <span className="text-slate-300 font-medium">Expositor colocado en el mostrador.</span>
                  </div>
-                 <div className="flex gap-3 p-3 bg-white rounded-lg border border-gray-100 shadow-sm">
-                    <span className="font-bold text-green-600 min-w-[100px]">El resultado:</span>
-                    <span className="text-gray-800 font-medium">50+ reseñas el primer mes. Nº1 del barrio en google.</span>
+                 <div className="p-4 bg-green-900/20 rounded-xl border border-green-500/20">
+                    <span className="block text-xs font-bold text-green-400 uppercase tracking-wide mb-1">El resultado</span>
+                    <span className="text-white font-bold text-lg">50+ reseñas el primer mes. Nº1 del barrio en google.</span>
                  </div>
               </div>
            </div>
 
            {/* Case 2 */}
-           <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-              <div className="flex items-center gap-4 mb-6">
-                 <div className="w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold">C</div>
-                 <h3 className="text-xl font-bold text-brand-900">CASO 2 — Clínica/servicio</h3>
+           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
+              <div className="flex items-center gap-4 mb-8">
+                 <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">C</div>
+                 <h3 className="text-xl font-bold text-white">Clínica/servicio</h3>
               </div>
-              <div className="space-y-4">
-                 <div className="flex gap-3">
-                    <span className="font-bold text-red-500 min-w-[100px]">El problema:</span>
-                    <span className="text-gray-600">Vergüenza al pedir reseñas. Momento incómodo tras la sesión.</span>
+              <div className="space-y-6">
+                 <div className="flex flex-col gap-1">
+                    <span className="text-xs font-bold text-red-400 uppercase tracking-wide">El problema</span>
+                    <span className="text-slate-300 font-medium">Vergüenza al pedir reseñas. Momento incómodo tras la sesión.</span>
                  </div>
-                 <div className="flex gap-3">
-                    <span className="font-bold text-blue-500 min-w-[100px]">El cambio:</span>
-                    <span className="text-gray-600">Tarjeta profesional al terminar cada sesión.</span>
+                 <div className="w-full h-px bg-white/10"></div>
+                 <div className="flex flex-col gap-1">
+                    <span className="text-xs font-bold text-brand-400 uppercase tracking-wide">El cambio</span>
+                    <span className="text-slate-300 font-medium">Tarjeta profesional al terminar cada sesión.</span>
                  </div>
-                 <div className="flex gap-3 p-3 bg-white rounded-lg border border-gray-100 shadow-sm">
-                    <span className="font-bold text-green-600 min-w-[100px]">El resultado:</span>
-                    <span className="text-gray-800 font-medium">90% valoraciones al instante. Sin forzar. Sin incomodar.</span>
+                 <div className="p-4 bg-green-900/20 rounded-xl border border-green-500/20">
+                    <span className="block text-xs font-bold text-green-400 uppercase tracking-wide mb-1">El resultado</span>
+                    <span className="text-white font-bold text-lg">90% valoraciones al instante. Sin forzar. Sin incomodar.</span>
                  </div>
               </div>
            </div>
@@ -332,47 +425,40 @@ export const SocialProof: React.FC = () => {
 
 export const ServiceIncluded: React.FC = () => {
   return (
-    <section className="py-24 bg-brand-900 text-white relative overflow-hidden">
+    <section className="py-24 bg-brand-950 text-white relative overflow-hidden border-t border-white/5">
       {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-800 rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600 rounded-full blur-[200px] opacity-20 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
          <div className="text-center max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight">
               No compras un expositor. <br/>
-              <span className="text-brand-400">Contratas un servicio llave en mano</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-white">Contratas un servicio llave en mano</span>
             </h2>
-            <p className="text-xl text-brand-100">
+            <p className="text-xl text-brand-100/90 font-light">
               Todo está pensado para que funcione desde el primer día y tú no tengas que pelearte con nada.
             </p>
          </div>
 
          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-brand-800/60 p-6 rounded-xl border border-brand-700 backdrop-blur-sm">
-                <Settings className="text-brand-400 mb-4" size={32}/>
-                <h3 className="font-bold text-lg mb-2">Configuración lista para usar</h3>
-                <p className="text-brand-200 text-sm">Llega enlazada a tu ficha de Google. Sin tocar nada técnico.</p>
-            </div>
-            <div className="bg-brand-800/60 p-6 rounded-xl border border-brand-700 backdrop-blur-sm">
-                <Users className="text-brand-400 mb-4" size={32}/>
-                <h3 className="font-bold text-lg mb-2">Formación adaptada</h3>
-                <p className="text-brand-200 text-sm">Te enseñamos a pedir reseñas de forma natural, sin incomodar. Online o presencial en Valencia.</p>
-            </div>
-            <div className="bg-brand-800/60 p-6 rounded-xl border border-brand-700 backdrop-blur-sm">
-                <Briefcase className="text-brand-400 mb-4" size={32}/>
-                <h3 className="font-bold text-lg mb-2">Acompañamiento inicial</h3>
-                <p className="text-brand-200 text-sm">La primera semana revisamos contigo cómo usarlo e integrarlo en la rutina. No te dejamos solo.</p>
-            </div>
-            <div className="bg-brand-800/60 p-6 rounded-xl border border-brand-700 backdrop-blur-sm">
-                <ShieldCheck className="text-brand-400 mb-4" size={32}/>
-                <h3 className="font-bold text-lg mb-2">Prevención de negativas</h3>
-                <p className="text-brand-200 text-sm">Aprendes a detectar y resolver la insatisfacción antes de que se convierta en una reseña negativa.</p>
-            </div>
+            {[
+              { icon: Settings, title: "Configuración lista", desc: "Llega enlazada a tu ficha de Google. Sin tocar nada técnico." },
+              { icon: Users, title: "Formación adaptada", desc: "Te enseñamos a pedir reseñas de forma natural. Online o presencial." },
+              { icon: Briefcase, title: "Acompañamiento", desc: "La primera semana revisamos contigo cómo usarlo. No te dejamos solo." },
+              { icon: ShieldCheck, title: "Prevención", desc: "Aprendes a detectar y resolver la insatisfacción antes de la reseña." }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm">
+                  <item.icon className="text-brand-400 mb-6" size={32}/>
+                  <h3 className="font-bold text-xl mb-3 text-white">{item.title}</h3>
+                  <p className="text-brand-200 text-sm leading-relaxed opacity-80">{item.desc}</p>
+              </div>
+            ))}
          </div>
          
-         <div className="mt-12 text-center">
-            <div className="inline-block bg-brand-700 px-6 py-3 rounded-full text-brand-100 font-semibold text-sm">
-               ➕ Material de apoyo: Guías claras, ejemplos reales y soporte humano. No bots.
+         <div className="mt-16 text-center">
+            <div className="inline-flex items-center gap-3 bg-brand-800/50 border border-white/10 px-8 py-4 rounded-full text-brand-100 font-medium text-sm backdrop-blur-md">
+               <Star className="text-yellow-400 fill-yellow-400" size={16}/>
+               Material de apoyo: Guías claras, ejemplos reales y soporte humano. No bots.
             </div>
          </div>
       </div>
@@ -382,7 +468,7 @@ export const ServiceIncluded: React.FC = () => {
 
 export const Pricing: React.FC = () => {
   return (
-    <section id="pricing" className="py-24 bg-gray-50">
+    <section id="pricing" className="py-24 bg-brand-900 relative border-t border-white/5">
       <div className="container mx-auto px-4">
         <SectionTitle>Elige cómo multiplicar tus reseñas</SectionTitle>
         <SectionSubtitle>
@@ -392,64 +478,70 @@ export const Pricing: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12">
           
           {/* Card 1 */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all flex flex-col">
-             <div className="mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Tarjeta Profesional</h3>
-                <div className="text-3xl font-extrabold text-brand-600 mt-2">50 €</div>
-                <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Pago Único</p>
+          <div className="bg-brand-950 rounded-[2rem] p-8 border border-white/10 shadow-lg hover:border-brand-500/50 transition-all flex flex-col group">
+             <div className="mb-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-brand-400 transition-colors">Tarjeta Profesional</h3>
+                <div className="flex items-baseline gap-1 mt-3">
+                  <span className="text-4xl font-extrabold text-white">50 €</span>
+                </div>
+                <div className="inline-block mt-2 px-3 py-1 bg-white/10 text-brand-200 text-xs font-bold rounded-full uppercase tracking-wide">Pago Único</div>
              </div>
-             <p className="text-gray-600 mb-6 flex-grow">
+             <p className="text-slate-300 mb-8 flex-grow leading-relaxed">
                Tarjeta premium con acabado mate negro. Pensada para profesionales por cita: salud, bienestar, imagen y servicios 1 a 1.
              </p>
-             <WhatsappButton text="Elegir Tarjeta" className="w-full text-base py-3" variant="outline" />
+             <WhatsappButton text="Elegir Tarjeta" className="w-full text-base py-4 border border-white/20" variant="white" />
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all flex flex-col">
-             <div className="mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Expositor Mostrador</h3>
-                <div className="text-3xl font-extrabold text-brand-600 mt-2">50 €</div>
-                <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Pago Único</p>
+          <div className="bg-brand-950 rounded-[2rem] p-8 border border-white/10 shadow-lg hover:border-brand-500/50 transition-all flex flex-col group">
+             <div className="mb-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-brand-400 transition-colors">Expositor Mostrador</h3>
+                <div className="flex items-baseline gap-1 mt-3">
+                  <span className="text-4xl font-extrabold text-white">50 €</span>
+                </div>
+                <div className="inline-block mt-2 px-3 py-1 bg-white/10 text-brand-200 text-xs font-bold rounded-full uppercase tracking-wide">Pago Único</div>
              </div>
-             <p className="text-gray-600 mb-6 flex-grow">
+             <p className="text-slate-300 mb-8 flex-grow leading-relaxed">
                Expositor listo para usar. Ideal si tienes un punto de cobro fijo o atención al cliente en mostrador.
              </p>
-             <WhatsappButton text="Elegir Expositor" className="w-full text-base py-3" variant="outline" />
+             <WhatsappButton text="Elegir Expositor" className="w-full text-base py-4 border border-white/20" variant="white" />
           </div>
 
           {/* Card 3 (Pack) */}
-          <div className="bg-brand-900 text-white rounded-3xl p-8 border-4 border-brand-500 shadow-2xl relative flex flex-col transform md:-translate-y-4">
-             <div className="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg uppercase tracking-wider">
+          <div className="bg-gradient-to-b from-brand-600 to-brand-800 text-white rounded-[2rem] p-8 border-4 border-brand-400/30 shadow-[0_0_40px_rgba(37,99,235,0.3)] relative flex flex-col transform md:-translate-y-6">
+             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brand-300 via-white to-brand-300 opacity-50"></div>
+             <div className="absolute top-6 right-6 bg-white text-brand-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                Más Vendido
              </div>
-             <div className="mb-4">
-                <h3 className="text-xl font-bold">Pack Completo</h3>
-                <div className="text-3xl font-extrabold text-white mt-2">150 €</div>
-                <p className="text-xs text-brand-300 uppercase tracking-wider font-semibold">Pago Único</p>
+             <div className="mb-6 mt-2">
+                <h3 className="text-xl font-bold text-white">Pack Completo</h3>
+                <div className="flex items-baseline gap-1 mt-3">
+                  <span className="text-5xl font-extrabold text-white">150 €</span>
+                </div>
+                <div className="inline-block mt-2 px-3 py-1 bg-brand-900/50 text-brand-100 text-xs font-bold rounded-full uppercase tracking-wide border border-white/10">Pago Único</div>
              </div>
-             <p className="text-brand-100 mb-6 flex-grow">
+             <p className="text-brand-50 mb-8 flex-grow leading-relaxed opacity-90">
                Un expositor + dos tarjetas para tu equipo. Ideal si tienes varios empleados o atención directa variada.
              </p>
-             <WhatsappButton text="Elegir Pack Completo" className="w-full text-base py-3" variant="primary" />
+             <WhatsappButton text="Elegir Pack Completo" className="w-full text-base py-4" variant="primary" />
           </div>
         </div>
 
         {/* All Included */}
-        <div className="max-w-4xl mx-auto mt-16 bg-white p-8 rounded-2xl border border-brand-100 shadow-sm">
-           <h3 className="text-xl font-bold text-center mb-6 text-brand-900">Todo incluido en el precio</h3>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-700">
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Configurado y enlazado</div>
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Listo para usar</div>
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Formación incluida</div>
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Acompañamiento inicial</div>
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Estrategia diaria</div>
-              <div className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-500"/> Material de apoyo</div>
-              <div className="col-span-2 md:col-span-2 flex items-center gap-2 font-bold text-brand-700 bg-brand-50 p-2 rounded justify-center">
-                 <CreditCard size={16}/> Pago único. Sin cuotas.
+        <div className="max-w-4xl mx-auto mt-20 bg-brand-950/50 p-10 rounded-[2rem] border border-white/5 backdrop-blur-sm">
+           <h3 className="text-2xl font-bold text-center mb-8 text-white">Todo incluido en el precio</h3>
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 text-sm text-brand-100 font-medium">
+              {[
+                "Configurado y enlazado", "Listo para usar", "Formación incluida", "Acompañamiento inicial",
+                "Estrategia diaria", "Material de apoyo"
+              ].map((feature, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle size={18} className="text-brand-400 shrink-0"/> {feature}
+                </div>
+              ))}
+              <div className="col-span-2 md:col-span-2 flex items-center gap-2 font-bold text-white bg-white/10 p-3 rounded-xl justify-center border border-white/5">
+                 <CreditCard size={18}/> Pago único. Sin cuotas.
               </div>
-           </div>
-           <div className="mt-8 text-center">
-             <WhatsappButton text="Preguntar duda por WhatsApp" variant="white" className="text-sm py-3 px-6 shadow-none border border-gray-200" />
            </div>
         </div>
       </div>
@@ -500,24 +592,33 @@ export const FAQ: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-4 max-w-3xl">
+    <section className="py-24 bg-brand-950 border-t border-white/5">
+      <div className="container mx-auto px-4 max-w-4xl">
         <SectionTitle>Preguntas frecuentes</SectionTitle>
-        <div className="space-y-4 mt-12">
+        <div className="space-y-4 mt-16">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
+            <div key={idx} className="bg-brand-900/50 rounded-3xl border border-white/5 overflow-hidden shadow-sm hover:bg-brand-900 transition-colors">
               <button 
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full flex justify-between items-center p-6 text-left focus:outline-none hover:bg-gray-100 transition-colors"
+                className="w-full flex items-start gap-6 p-6 text-left focus:outline-none"
               >
-                <span className="font-bold text-gray-900 pr-4">{faq.q}</span>
-                {openIndex === idx ? <ChevronUp className="text-brand-600 shrink-0"/> : <ChevronDown className="text-gray-400 shrink-0"/>}
-              </button>
-              {openIndex === idx && (
-                <div className="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200/50 pt-4 bg-white">
-                  {faq.a}
+                {/* Circle Icon - Dark Mode Style */}
+                <div className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-colors border ${openIndex === idx ? 'bg-brand-500 border-brand-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'bg-brand-800 border-white/10 text-brand-300'}`}>
+                   {openIndex === idx ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}
                 </div>
-              )}
+                
+                <div className="flex-grow pt-2">
+                  <span className={`font-bold text-lg transition-colors ${openIndex === idx ? 'text-white' : 'text-brand-100'}`}>
+                    {faq.q}
+                  </span>
+                  
+                  {openIndex === idx && (
+                    <div className="text-slate-300 leading-relaxed mt-4 animate-fadeIn border-t border-white/5 pt-4">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              </button>
             </div>
           ))}
         </div>
@@ -528,24 +629,27 @@ export const FAQ: React.FC = () => {
 
 export const FinalCTA: React.FC = () => {
   return (
-    <section className="py-24 bg-brand-950 text-white">
-      <div className="container mx-auto px-4 text-center max-w-4xl">
-         <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-           Si ya das un buen servicio, el problema no es tu cliente. <br/>
-           <span className="text-brand-400">Es tu visibilidad en Google.</span>
+    <section className="py-24 bg-gradient-to-b from-brand-950 to-black text-white relative overflow-hidden">
+       {/* Background glow */}
+       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 text-center max-w-5xl relative z-10">
+         <h2 className="text-3xl md:text-6xl font-extrabold mb-8 leading-tight tracking-tight">
+           Si ya das un buen servicio, <br/>el problema no es tu cliente. <br/>
+           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">Es tu visibilidad en Google.</span>
          </h2>
-         <p className="text-xl text-brand-100 mb-10 max-w-2xl mx-auto">
+         <p className="text-xl text-brand-200/70 mb-12 max-w-2xl mx-auto font-light">
            Cada día nuevos clientes comparan reseñas antes de decidir. 
            Si tu ficha no refleja lo bien que trabajas, se irán al local de al lado.
          </p>
          
-         <div className="flex flex-wrap justify-center gap-4 mb-12 text-brand-200 font-medium">
-            <span className="flex items-center gap-2 bg-brand-900 px-4 py-2 rounded-full border border-brand-800"><CheckCircle size={18} className="text-brand-400"/> Pago único</span>
-            <span className="flex items-center gap-2 bg-brand-900 px-4 py-2 rounded-full border border-brand-800"><CheckCircle size={18} className="text-brand-400"/> Sin tocar nada técnico</span>
-            <span className="flex items-center gap-2 bg-brand-900 px-4 py-2 rounded-full border border-brand-800"><CheckCircle size={18} className="text-brand-400"/> Estrategia y soporte incluidos</span>
+         <div className="flex flex-wrap justify-center gap-4 mb-16 text-brand-100 font-medium">
+            <span className="flex items-center gap-2 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-sm"><CheckCircle size={18} className="text-brand-400"/> Pago único</span>
+            <span className="flex items-center gap-2 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-sm"><CheckCircle size={18} className="text-brand-400"/> Sin tocar nada técnico</span>
+            <span className="flex items-center gap-2 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-sm"><CheckCircle size={18} className="text-brand-400"/> Estrategia incluida</span>
          </div>
 
-         <WhatsappButton text="Hablar por WhatsApp y pedir mi pack" variant="primary" className="text-xl px-10 py-5" />
+         <WhatsappButton text="Hablar por WhatsApp y pedir mi pack" variant="primary" className="text-xl px-12 py-6 shadow-[0_0_30px_rgba(37,211,102,0.3)] border border-green-500/30" />
       </div>
     </section>
   );
@@ -553,16 +657,16 @@ export const FinalCTA: React.FC = () => {
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white py-10 border-t border-gray-100">
+    <footer className="bg-black py-12 border-t border-white/10">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-             <div className="w-6 h-6 bg-brand-600 rounded text-white flex items-center justify-center font-bold text-xs">G</div>
-             <span className="font-bold text-gray-900">GoogleBoost</span>
+          <div className="flex items-center gap-3 mb-4 md:mb-0">
+             <div className="w-8 h-8 bg-white/10 rounded-lg text-white flex items-center justify-center font-bold text-sm border border-white/10">G</div>
+             <span className="font-bold text-gray-300 text-lg">GoogleBoost</span>
           </div>
           <p>© {new Date().getFullYear()} GoogleBoost. Todos los derechos reservados.</p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-brand-600">Política de Privacidad</a>
-            <a href="#" className="hover:text-brand-600">Aviso Legal</a>
+          <div className="flex gap-6 mt-4 md:mt-0 font-medium">
+            <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
+            <a href="#" className="hover:text-white transition-colors">Aviso Legal</a>
           </div>
       </div>
     </footer>
@@ -571,12 +675,12 @@ export const Footer: React.FC = () => {
 
 export const StickyCTA: React.FC = () => {
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:hidden z-50">
+    <div className="fixed bottom-6 left-6 right-6 md:hidden z-50">
       <a 
         href="https://wa.me/34600000000" 
-        className="flex items-center justify-center gap-2 w-full bg-green-500 text-white font-bold py-4 rounded-xl shadow-2xl animate-pulse"
+        className="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white font-bold py-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.4)] animate-pulse border border-green-400/30"
       >
-        <MessageCircle size={20} />
+        <WhatsAppIcon className="w-6 h-6 text-white" />
         Pedir Pack por WhatsApp
       </a>
     </div>
