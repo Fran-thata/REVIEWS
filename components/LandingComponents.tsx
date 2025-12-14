@@ -79,7 +79,7 @@ const SectionSubtitle = ({ children, className = "" }: { children?: React.ReactN
 );
 
 const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", variant = "primary" }: { text?: string, className?: string, variant?: 'primary' | 'outline' | 'white' | 'brand' }) => {
-  // Reduced padding (px-6 py-3) and font size (text-sm) as requested ("más chiquitito")
+  // Base classes with default size, can be overridden by className prop
   const baseClasses = "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl group";
   
   const variants = {
@@ -160,7 +160,8 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
 
             {/* Centered Button: justify-center applied globally */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
-              <WhatsappButton />
+              {/* Button "Grandecito": Increased padding, font-size, and shadow */}
+              <WhatsappButton className="w-full sm:w-auto px-10 py-4 text-base md:text-lg md:px-14 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-105" />
             </div>
           </div>
           
