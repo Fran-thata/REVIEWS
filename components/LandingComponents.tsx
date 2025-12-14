@@ -85,7 +85,6 @@ const SectionSubtitle = ({ children, className = "" }: { children?: React.ReactN
 );
 
 const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", variant = "primary" }: { text?: string, className?: string, variant?: 'primary' | 'outline' | 'white' | 'brand' }) => {
-  // Base classes with default size, can be overridden by className prop
   const baseClasses = "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl group";
   
   const variants = {
@@ -97,7 +96,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 
   return (
     <a 
-      href="https://wa.me/34600000000" // Replace with real number
+      href="https://wa.me/34600000000"
       target="_blank" 
       rel="noopener noreferrer"
       className={`${baseClasses} ${variants[variant]} ${className}`}
@@ -108,13 +107,10 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
   );
 };
 
-// --- Sections ---
-
 export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
   return (
     <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-12 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
       <AnimationStyles />
-      {/* Background Decor - Deep Blue Vibes */}
       <div className="absolute top-0 right-0 w-full h-full opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-600/20 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
@@ -146,17 +142,11 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                </li>
             </ul>
             
-            {/* NEW: Scrolling Marquee (Tools Strip) */}
             <div className="mb-12 flex flex-col items-center lg:items-start gap-4 w-full">
-              {/* REMOVED: "Menos herramientas, más resultados" label as requested */}
-              
-              {/* Marquee Container: Removed background, borders and blur. Pure transparent. */}
               <div className="w-full max-w-[calc(100vw-2rem)] md:max-w-xl relative py-4 mask-fade-sides overflow-hidden">
                    <div className="flex gap-6 md:gap-12 animate-marquee w-max">
-                       {/* Duplicated content to create infinite seamless loop */}
                        {[...Array(12)].map((_, i) => (
                            <React.Fragment key={i}>
-                               {/* Item 1: Google */}
                                <div className="flex items-center gap-2 md:gap-3 shrink-0">
                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg p-1 md:p-1.5">
                                        <GoogleLogo />
@@ -164,7 +154,6 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                                    <span className="text-white font-bold text-base md:text-lg tracking-tight">Google</span>
                                </div>
 
-                               {/* Item 2: Stars */}
                                <div className="flex items-center gap-2 md:gap-3 shrink-0">
                                    <div className="flex gap-0.5">
                                        {[1,2,3,4,5].map(star => (
@@ -179,21 +168,14 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
               </div>
             </div>
 
-            {/* Centered Button: justify-center applied globally */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
-              {/* Button "Grandecito": Increased padding, font-size, and shadow */}
               <WhatsappButton text="Quiero mis RESEÑAS ahora" className="w-full sm:w-auto px-10 py-4 text-base md:text-lg md:px-14 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-105" />
             </div>
           </div>
           
           <div className="lg:w-1/2 relative flex justify-center w-full">
-             {/* Updated Container for Video: max-w-sm to emulate phone size */}
              <div className="relative w-full max-w-sm mx-auto">
                 <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
-                {/* Image Frame Style - Dark Premium 
-                    IMPORTANT: Removed overflow-hidden from this outer wrapper so the floating badge isn't clipped.
-                    The video itself still has its own rounded overflow container.
-                */}
                 <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm transform transition-transform">
                     <div className="aspect-[9/16] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
                        <video 
@@ -206,7 +188,6 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                       />
                     </div>
                     
-                    {/* Floating Element: Width adjusted and no-wrap to ensure text isn't cut off ("que no se quede a medias") */}
                     <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900 p-4 rounded-xl shadow-2xl border border-white/20 animate-bounce z-20 min-w-[200px]" style={{ animationDuration: '4s' }}>
                       <div className="flex items-center gap-3">
                          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2.5 shadow-lg shrink-0">
@@ -243,21 +224,17 @@ export const Comparison: React.FC = () => {
         </SectionSubtitle>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
-          {/* Card 1 - El negocio que pasa desapercibido */}
           <div className="bg-brand-900 p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-xl flex flex-col">
-            {/* Header Icon - Dark Blue Circle with Light Blue EyeOff Icon */}
             <div className="flex justify-center mb-8">
                 <div className="w-16 h-16 bg-brand-950 rounded-full flex items-center justify-center shadow-lg border border-white/10">
                   <EyeOff className="text-brand-200" size={48} />
                 </div>
             </div>
             
-            {/* Title */}
             <h3 className="text-2xl font-bold text-white mb-6 text-left">
                El negocio que <br/> pasa desapercibido
             </h3>
 
-            {/* List */}
             <ul className="space-y-4 mb-8 flex-grow">
                <li className="flex items-start gap-3 text-brand-100/80 font-medium leading-relaxed">
                   <span className="text-white mt-1.5 text-[8px]">●</span>
@@ -269,7 +246,6 @@ export const Comparison: React.FC = () => {
                </li>
             </ul>
 
-            {/* Consequence Box */}
             <div className="p-6 bg-brand-950/50 rounded-2xl border border-white/5">
               <p className="text-brand-200 text-sm font-medium leading-relaxed">
                 <strong className="text-white/90 block mb-1">Consecuencia:</strong>
@@ -278,23 +254,17 @@ export const Comparison: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 2 - El negocio que inspira confianza */}
           <div className="bg-brand-900 p-8 md:p-10 rounded-[2.5rem] border border-brand-400/30 shadow-2xl relative overflow-hidden flex flex-col transform md:-translate-y-4">
-            {/* REMOVED EL OBJETIVO BADGE */}
-            
-            {/* Header Icon - CENTERED */}
             <div className="flex justify-center mb-8">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
                   <Star className="text-brand-900 fill-brand-900" size={32} />
                 </div>
             </div>
 
-            {/* Title */}
             <h3 className="text-2xl font-bold text-white mb-6 text-left">
                El negocio que <br/> inspira confianza
             </h3>
 
-            {/* List */}
             <ul className="space-y-4 mb-8 flex-grow">
                <li className="flex items-start gap-3 text-white font-medium leading-relaxed">
                   <span className="text-white/70 mt-1.5 text-[8px]">●</span>
@@ -310,7 +280,6 @@ export const Comparison: React.FC = () => {
                </li>
             </ul>
 
-            {/* Consequence Box - MATCHING STYLE EXACTLY */}
             <div className="p-6 bg-brand-950/50 rounded-2xl border border-white/5">
                <p className="text-brand-200 text-sm font-medium leading-relaxed">
                  <strong className="text-white/90 block mb-1">Consecuencia:</strong>
@@ -331,7 +300,6 @@ export const Comparison: React.FC = () => {
 export const HowItWorks: React.FC = () => {
   return (
     <section className="py-24 bg-brand-900 border-t border-white/5 relative overflow-hidden">
-      {/* Subtle Pattern */}
       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px]"></div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -340,30 +308,29 @@ export const HowItWorks: React.FC = () => {
           Olvídate de apps o configuraciones raras. En tres pasos ya estás generando reseñas.
         </SectionSubtitle>
 
-        {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-24">
+        {/* Updated Steps Layout: Circles outside the card */}
+        <div className="flex flex-col gap-8 max-w-4xl mx-auto mb-24">
            {[
-             { num: "01", title: "Pides tu pack", desc: "Rellenas un formulario rápido: en menos de 1 minuto." },
-             { num: "02", title: "Lo dejamos perfecto", desc: "Todo configurado y enlazado a tu ficha de Google. No tocas nada." },
-             { num: "03", title: "Empieza a trabajar", desc: "Lo colocas en tu mostrador, y ese mismo día ya puedes ganar visibilidad." }
+             { num: "1", title: "Pides tu pack", desc: "Rellenas un formulario rápido: en menos de 1 minuto." },
+             { num: "2", title: "Lo dejamos perfecto", desc: "Todo configurado y enlazado a tu ficha de Google. No tocas nada." },
+             { num: "3", title: "Empieza a trabajar", desc: "Lo colocas en tu mostrador, y ese mismo día ya puedes ganar visibilidad." }
            ].map((step, idx) => (
-             <div key={idx} className="bg-brand-600 p-10 rounded-[2.5rem] relative group hover:scale-[1.02] transition-all duration-300 shadow-xl border border-brand-500/30 overflow-hidden">
-                 <div className="absolute -top-6 -right-6 text-[8rem] font-black text-white/20 select-none z-0 leading-none">
+             <div key={idx} className="flex items-center gap-6 md:gap-8">
+                 {/* Number Circle - Separate Element */}
+                 <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-brand-600 flex items-center justify-center text-4xl md:text-5xl font-extrabold text-white shadow-xl z-10 border-4 border-brand-800">
                     {step.num}
                  </div>
-                 <div className="relative z-10">
-                    <div className="text-6xl font-extrabold text-white mb-6">{step.num}</div>
-                    <h4 className="text-2xl font-bold text-white mb-4">{step.title}</h4>
-                    <p className="text-brand-100 font-medium leading-relaxed">{step.desc}</p>
+                 {/* Text Content - Separate Card */}
+                 <div className="bg-brand-600 p-8 rounded-[2rem] flex-grow shadow-xl border border-brand-500/30 text-left hover:bg-brand-500/20 transition-colors">
+                    <h4 className="text-2xl font-bold text-white mb-2">{step.title}</h4>
+                    <p className="text-brand-100 font-medium leading-relaxed text-lg">{step.desc}</p>
                  </div>
              </div>
            ))}
         </div>
 
-        {/* Products Showcase - Dark Cards */}
         <div className="space-y-8 max-w-6xl mx-auto">
           
-          {/* Expositor */}
           <div className="bg-brand-800 rounded-[2.5rem] p-8 md:p-14 border border-white/5 flex flex-col md:flex-row items-center gap-12 shadow-2xl relative overflow-hidden">
              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-600/10 rounded-full blur-[80px] -mr-20 -mt-20"></div>
             
@@ -401,7 +368,6 @@ export const HowItWorks: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Tarjeta Profesional */}
             <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
                <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6 border border-yellow-500/20">
                   <Star className="text-yellow-500 fill-yellow-500" size={24} />
@@ -417,7 +383,6 @@ export const HowItWorks: React.FC = () => {
                <p className="font-bold text-white border-t border-white/10 pt-6">Trato 1 a 1 = Reseña premium</p>
             </div>
 
-            {/* Tarjeta Equipo */}
             <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
                   <Users className="text-blue-400" size={24} />
@@ -450,7 +415,6 @@ export const SocialProof: React.FC = () => {
         </SectionSubtitle>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
-           {/* Case 1 */}
            <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
               <div className="flex items-center gap-4 mb-8">
                  <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">R</div>
@@ -473,7 +437,6 @@ export const SocialProof: React.FC = () => {
               </div>
            </div>
 
-           {/* Case 2 */}
            <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
               <div className="flex items-center gap-4 mb-8">
                  <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">C</div>
@@ -504,7 +467,6 @@ export const SocialProof: React.FC = () => {
 export const ServiceIncluded: React.FC = () => {
   return (
     <section className="py-24 bg-brand-950 text-white relative overflow-hidden border-t border-white/5">
-      {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600 rounded-full blur-[200px] opacity-20 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -555,7 +517,6 @@ export const Pricing: React.FC = () => {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12">
           
-          {/* Card 1 */}
           <div className="bg-brand-950 rounded-[2rem] p-8 border border-white/10 shadow-lg hover:border-brand-500/50 transition-all flex flex-col group">
              <div className="mb-6">
                 <h3 className="text-xl font-bold text-white group-hover:text-brand-400 transition-colors">Tarjeta Profesional</h3>
@@ -570,7 +531,6 @@ export const Pricing: React.FC = () => {
              <WhatsappButton text="Elegir Tarjeta" className="w-full text-base py-4 border border-white/20" variant="white" />
           </div>
 
-          {/* Card 2 */}
           <div className="bg-brand-950 rounded-[2rem] p-8 border border-white/10 shadow-lg hover:border-brand-500/50 transition-all flex flex-col group">
              <div className="mb-6">
                 <h3 className="text-xl font-bold text-white group-hover:text-brand-400 transition-colors">Expositor Mostrador</h3>
@@ -585,7 +545,6 @@ export const Pricing: React.FC = () => {
              <WhatsappButton text="Elegir Expositor" className="w-full text-base py-4 border border-white/20" variant="white" />
           </div>
 
-          {/* Card 3 (Pack) */}
           <div className="bg-gradient-to-b from-brand-600 to-brand-800 text-white rounded-[2rem] p-8 border-4 border-brand-400/30 shadow-[0_0_40px_rgba(37,99,235,0.3)] relative flex flex-col transform md:-translate-y-6">
              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brand-300 via-white to-brand-300 opacity-50"></div>
              <div className="absolute top-6 right-6 bg-white text-brand-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
@@ -605,7 +564,6 @@ export const Pricing: React.FC = () => {
           </div>
         </div>
 
-        {/* All Included */}
         <div className="max-w-4xl mx-auto mt-20 bg-brand-950/50 p-10 rounded-[2rem] border border-white/5 backdrop-blur-sm">
            <h3 className="text-2xl font-bold text-center mb-8 text-white">Todo incluido en el precio</h3>
            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 text-sm text-brand-100 font-medium">
@@ -680,7 +638,6 @@ export const FAQ: React.FC = () => {
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                 className="w-full flex items-start gap-6 p-6 text-left focus:outline-none"
               >
-                {/* Circle Icon - Dark Mode Style */}
                 <div className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-colors border ${openIndex === idx ? 'bg-brand-500 border-brand-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'bg-brand-800 border-white/10 text-brand-300'}`}>
                    {openIndex === idx ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}
                 </div>
@@ -708,7 +665,6 @@ export const FAQ: React.FC = () => {
 export const FinalCTA: React.FC = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-brand-950 to-black text-white relative overflow-hidden">
-       {/* Background glow */}
        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-4 text-center max-w-5xl relative z-10">
