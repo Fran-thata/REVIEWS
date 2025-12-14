@@ -10,7 +10,10 @@ import {
   CreditCard,
   Settings,
   Users,
-  Briefcase
+  Briefcase,
+  Zap,
+  Key,
+  Shield
 } from 'lucide-react';
 
 // --- Custom Animations Style Component ---
@@ -201,14 +204,18 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                     </div>
                     
                     {/* Floating Element */}
-                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-xl border border-white/20 max-w-[200px] md:max-w-xs animate-bounce z-20" style={{ animationDuration: '4s' }}>
-                      <div className="flex items-center gap-3">
-                         <div className="bg-green-500/20 p-2.5 rounded-full border border-green-500/30">
-                           <CheckCircle className="text-green-400" size={20} />
+                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900/95 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white/20 animate-bounce z-20" style={{ animationDuration: '4s' }}>
+                      <div className="flex items-center gap-4">
+                         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2.5 shadow-md shrink-0">
+                             <GoogleLogo />
                          </div>
                          <div>
-                           <p className="font-bold text-white text-sm">Reseña Recibida</p>
-                           <p className="text-xs text-brand-200 font-medium">Hace 1 momento</p>
+                           <div className="flex gap-1 mb-1">
+                             {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-yellow-400 text-yellow-400" />)}
+                           </div>
+                           <p className="font-bold text-white text-sm leading-tight">
+                             Nueva Reseña<br/>Recibida
+                           </p>
                          </div>
                       </div>
                     </div>
