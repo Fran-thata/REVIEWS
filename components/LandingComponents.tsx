@@ -13,7 +13,8 @@ import {
   Briefcase,
   Zap,
   Key,
-  Shield
+  Shield,
+  X
 } from 'lucide-react';
 
 // --- Custom Animations Style Component ---
@@ -231,61 +232,96 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
 export const Comparison: React.FC = () => {
   return (
     <section className="py-24 bg-brand-950 relative">
-      {/* Divider Gradient */}
       <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-brand-950 to-transparent pointer-events-none"></div>
 
       <div className="container mx-auto px-4">
         <SectionTitle>En Google solo existen dos tipos de negocio:</SectionTitle>
-        <SectionSubtitle>
-          Unos pasan desapercibidos. Otros inspiran confianza. ¿Cuál es el tuyo?
+        <SectionSubtitle className="text-xl md:text-2xl">
+          Unos pasan desapercibidos. Otros inspiran confianza. <span className="text-white font-extrabold">¿Cuál es el tuyo?</span>
         </SectionSubtitle>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mt-12">
-          {/* Card 1 - Dark/Negative -> UPDATED BACKGROUND TO MATCH CARD 2 */}
-          <div className="bg-gradient-to-br from-brand-800 to-brand-900 p-10 rounded-[2.5rem] border border-white/10 hover:border-red-500/30 transition-all duration-300 group relative overflow-hidden">
-            <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-red-500/20 relative z-10">
-              <XCircle className="text-red-500" size={32} />
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
+          {/* Card 1 - Negative (Invisible Business) */}
+          <div className="bg-brand-900/30 p-8 md:p-10 rounded-[2.5rem] border border-white/5 hover:border-red-500/20 transition-all duration-300 group relative overflow-hidden backdrop-blur-sm">
+            {/* Header Icon */}
+            <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-8 border border-red-500/10 group-hover:scale-105 transition-transform">
+              <X className="text-red-500" size={28} />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">🛑 El negocio que pasa desapercibido</h3>
-            <div className="space-y-4 text-slate-300 mb-8 font-medium relative z-10">
-              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Pocas reseñas, desactualizadas o incoherentes.</p>
-              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Das buen servicio, pero Google solo muestra reseñas antiguas.</p>
-              <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> El cliente piensa: “Si nadie comenta… por algo será.”</p>
-            </div>
-            <div className="p-5 bg-red-950/20 rounded-2xl border border-red-500/20 relative z-10">
-              <p className="text-red-300 font-semibold text-sm">
-                Consecuencia: elige otro local y tú ni te enteras, pierdes la venta sin saber por qué.
+            
+            {/* Title */}
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+               <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+               El negocio que pasa desapercibido
+            </h3>
+
+            {/* List */}
+            <ul className="space-y-4 mb-8">
+               <li className="flex items-start gap-3 text-slate-400 font-medium leading-relaxed">
+                  <span className="text-red-500/60 mt-1.5 text-[10px]">●</span>
+                  <span>Pocas reseñas, desactualizadas o incoherentes.</span>
+               </li>
+               <li className="flex items-start gap-3 text-slate-400 font-medium leading-relaxed">
+                  <span className="text-red-500/60 mt-1.5 text-[10px]">●</span>
+                  <span>Das buen servicio, pero Google solo muestra reseñas antiguas.</span>
+               </li>
+               <li className="flex items-start gap-3 text-slate-400 font-medium leading-relaxed">
+                  <span className="text-red-500/60 mt-1.5 text-[10px]">●</span>
+                  <span>El cliente piensa: "Si nadie comenta… por algo será."</span>
+               </li>
+            </ul>
+
+            {/* Consequence Box */}
+            <div className="p-5 bg-red-500/5 rounded-2xl border border-red-500/10">
+              <p className="text-red-200/60 text-sm font-medium leading-relaxed">
+                <strong className="text-red-400 block mb-1">Consecuencia:</strong>
+                Elige otro local y tú ni te enteras. Pierdes ventas silenciosamente.
               </p>
             </div>
           </div>
 
-          {/* Card 2 - Premium Highlight / Positive */}
-          <div className="bg-gradient-to-br from-brand-800 to-brand-900 p-10 rounded-[2.5rem] border border-brand-500/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 relative group overflow-hidden">
-            {/* Glow effect */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/20 rounded-full blur-[80px] -mr-16 -mt-16 pointer-events-none"></div>
+          {/* Card 2 - Positive (Trusted Business) - PREMIUM LOOK */}
+          <div className="bg-gradient-to-b from-brand-800 to-brand-900 p-8 md:p-10 rounded-[2.5rem] border border-brand-400/30 relative overflow-hidden group shadow-[0_0_50px_rgba(37,99,235,0.1)] transform md:-translate-y-2">
+            
+            {/* Header Icon */}
+            <div className="w-14 h-14 bg-brand-500/20 rounded-2xl flex items-center justify-center mb-8 border border-brand-400/30 shadow-[0_0_20px_rgba(59,130,246,0.15)] group-hover:scale-105 transition-transform">
+              <Star className="text-brand-300 fill-brand-300" size={28} />
+            </div>
 
-            <div className="absolute top-6 right-6 bg-green-500/20 text-green-300 text-xs font-bold px-3 py-1 rounded-full border border-green-500/30 uppercase tracking-wider">
-              El objetivo
-            </div>
-            <div className="w-16 h-16 bg-brand-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-brand-400/20 relative z-10">
-              <Star className="text-brand-300 fill-brand-300" size={32} />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">🟢 El negocio que inspira confianza</h3>
-            <div className="space-y-4 text-brand-100 mb-8 font-medium relative z-10">
-              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> Reseñas nuevas cada semana.</p>
-              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> Ficha activa que trabaja 24/7 por ti.</p>
-              <p className="flex items-start gap-3"><span className="text-green-400 font-bold mt-1">•</span> El cliente piensa: “Buen servicio + buenas reseñas = aquí acierto.”</p>
-            </div>
-            <div className="p-5 bg-green-900/20 rounded-2xl border border-green-500/20 relative z-10 backdrop-blur-md">
-              <p className="text-green-300 font-semibold text-sm">
-                Consecuencia: entra decidido, confía antes de conocerte, ganas ventas sin esfuerzo extra.
-              </p>
+            {/* Title */}
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+               <div className="w-2.5 h-2.5 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)] animate-pulse"></div>
+               El negocio que inspira confianza
+            </h3>
+
+            {/* List */}
+            <ul className="space-y-4 mb-8">
+               <li className="flex items-start gap-3 text-white font-medium leading-relaxed">
+                  <CheckCircle size={18} className="text-green-400 shrink-0 mt-1" />
+                  <span>Reseñas nuevas <span className="text-brand-200 font-semibold">cada semana</span>.</span>
+               </li>
+               <li className="flex items-start gap-3 text-white font-medium leading-relaxed">
+                  <CheckCircle size={18} className="text-green-400 shrink-0 mt-1" />
+                  <span>Ficha activa que trabaja 24/7 por ti.</span>
+               </li>
+               <li className="flex items-start gap-3 text-white font-medium leading-relaxed">
+                  <CheckCircle size={18} className="text-green-400 shrink-0 mt-1" />
+                  <span>El cliente piensa: "Buen servicio + buenas reseñas = <span className="text-green-300 font-bold border-b border-green-300/30">Aquí acierto</span>."</span>
+               </li>
+            </ul>
+
+            {/* Consequence Box */}
+            <div className="p-5 bg-brand-500/10 rounded-2xl border border-brand-400/20 backdrop-blur-sm relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-400/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+               <p className="text-brand-100 text-sm font-medium leading-relaxed relative z-10">
+                 <strong className="text-green-400 block mb-1">Consecuencia:</strong>
+                 Entra decidido, confía antes de conocerte y ganas ventas sin esfuerzo extra.
+               </p>
             </div>
           </div>
         </div>
 
         <div className="text-center mt-16">
-           <p className="text-2xl font-bold text-white">La diferencia no es tu servicio, es lo visible que lo haces en Google.</p>
+           <p className="text-xl md:text-2xl font-bold text-white/90">La diferencia no es tu servicio, es lo visible que lo haces en Google.</p>
         </div>
       </div>
     </section>
