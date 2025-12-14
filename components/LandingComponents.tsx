@@ -188,10 +188,10 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
              <div className="relative w-full max-w-sm mx-auto">
                 <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
                 {/* Image Frame Style - Dark Premium 
-                    IMPORTANT: Prepared for Video. aspect-[9/16] provides a good ratio for vertical video.
-                    Ensure the content inside is w-full h-full object-cover.
+                    IMPORTANT: Removed overflow-hidden from this outer wrapper so the floating badge isn't clipped.
+                    The video itself still has its own rounded overflow container.
                 */}
-                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm overflow-hidden transform transition-transform">
+                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm transform transition-transform">
                     <div className="aspect-[9/16] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
                        <video 
                         src="https://res.cloudinary.com/ddpujsrsg/video/upload/v1765736203/WhatsApp_Video_2025-12-07_at_18.01.16-vmake_yfhwvd.mp4" 
@@ -203,18 +203,18 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                       />
                     </div>
                     
-                    {/* Floating Element */}
-                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900/95 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white/20 animate-bounce z-20" style={{ animationDuration: '4s' }}>
-                      <div className="flex items-center gap-4">
-                         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2.5 shadow-md shrink-0">
+                    {/* Floating Element: Width adjusted and no-wrap to ensure text isn't cut off ("que no se quede a medias") */}
+                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900 p-4 rounded-xl shadow-2xl border border-white/20 animate-bounce z-20 min-w-[200px]" style={{ animationDuration: '4s' }}>
+                      <div className="flex items-center gap-3">
+                         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2.5 shadow-lg shrink-0">
                              <GoogleLogo />
                          </div>
-                         <div>
-                           <div className="flex gap-1 mb-1">
-                             {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-yellow-400 text-yellow-400" />)}
-                           </div>
-                           <p className="font-bold text-white text-sm leading-tight">
-                             Nueva Reseña<br/>Recibida
+                         <div className="flex flex-col justify-center">
+                           <p className="font-extrabold text-white text-sm leading-tight whitespace-nowrap">
+                             Nueva Reseña
+                           </p>
+                           <p className="text-brand-200 text-xs font-medium leading-tight whitespace-nowrap mt-0.5">
+                             Recibida hace un momento
                            </p>
                          </div>
                       </div>
