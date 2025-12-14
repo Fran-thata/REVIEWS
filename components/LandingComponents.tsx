@@ -29,8 +29,9 @@ const AnimationStyles = () => (
       95% { transform: rotate(0deg) scale(1); }
       100% { transform: rotate(0deg) scale(1); }
     }
+    /* Slower animation: 80s for even smoother flow */
     .animate-marquee {
-      animation: marquee 30s linear infinite;
+      animation: marquee 80s linear infinite;
     }
     .animate-whatsapp {
       animation: whatsapp-wiggle 4s ease-in-out infinite;
@@ -40,13 +41,18 @@ const AnimationStyles = () => (
     .animate-marquee:hover {
       animation-play-state: paused;
     }
+    /* Mask for marquee fade effect */
+    .mask-fade-sides {
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
   `}</style>
 );
 
 // --- Shared UI Components ---
 
 const GoogleLogo = () => (
-  <svg viewBox="0 0 24 24" className="w-5 h-5">
+  <svg viewBox="0 0 24 24" className="w-full h-full">
     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
@@ -99,7 +105,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 
 export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
   return (
-    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-36 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
       <AnimationStyles />
       {/* Background Decor - Deep Blue Vibes */}
       <div className="absolute top-0 right-0 w-full h-full opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
@@ -109,44 +115,41 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
           
-          <div className="lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 text-white tracking-tight drop-shadow-lg">
+          <div className="lg:w-1/2 text-center lg:text-left w-full">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 text-white tracking-tight drop-shadow-lg break-words">
               Multiplica tus reseñas en Google y conviértelas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">más clientes</span>
             </h1>
-            <p className="text-lg md:text-xl text-brand-100 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90">
+            <p className="text-base sm:text-lg md:text-xl text-brand-100 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90">
               Las malas reseñas llegan solas. Las buenas se piden en el momento exacto.
               Nuestra Placa para reseñas hace que el cliente valore en segundos, sin pensarlo, justo cuando está más satisfecho.
             </p>
             
             {/* NEW: Scrolling Marquee (Tools Strip) */}
-            <div className="mb-12 flex flex-col items-center lg:items-start gap-4">
+            <div className="mb-12 flex flex-col items-center lg:items-start gap-4 w-full">
               <span className="text-xs font-bold text-brand-300 uppercase tracking-widest pl-1">Menos herramientas, más resultados:</span>
               
-              <div className="w-full max-w-xl relative overflow-hidden bg-brand-900/20 border border-white/10 rounded-2xl py-3 backdrop-blur-md">
-                   {/* Gradient Masks for smooth fade edges */}
-                   <div className="absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-brand-900 via-brand-900/80 to-transparent"></div>
-                   <div className="absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-brand-900 via-brand-900/80 to-transparent"></div>
-
-                   <div className="flex gap-12 animate-marquee w-max">
+              {/* Added max-w-[calc(100vw-2rem)] to strictly constrain width on mobile within the padding */}
+              <div className="w-full max-w-[calc(100vw-2rem)] md:max-w-xl relative bg-brand-900/20 border border-white/10 rounded-2xl py-4 backdrop-blur-md mask-fade-sides overflow-hidden">
+                   <div className="flex gap-6 md:gap-12 animate-marquee w-max">
                        {/* Duplicated content to create infinite seamless loop */}
                        {[...Array(12)].map((_, i) => (
                            <React.Fragment key={i}>
                                {/* Item 1: Google */}
-                               <div className="flex items-center gap-3 shrink-0">
-                                   <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                               <div className="flex items-center gap-2 md:gap-3 shrink-0">
+                                   <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg p-1 md:p-1.5">
                                        <GoogleLogo />
                                    </div>
-                                   <span className="text-white font-bold text-lg tracking-tight">Google</span>
+                                   <span className="text-white font-bold text-base md:text-lg tracking-tight">Google</span>
                                </div>
 
                                {/* Item 2: Stars */}
-                               <div className="flex items-center gap-3 shrink-0">
+                               <div className="flex items-center gap-2 md:gap-3 shrink-0">
                                    <div className="flex gap-0.5">
                                        {[1,2,3,4,5].map(star => (
-                                           <Star key={star} size={16} className="fill-yellow-400 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" />
+                                           <Star key={star} className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" />
                                        ))}
                                    </div>
-                                   <span className="text-brand-100 font-medium text-sm">Reseñas 5 estrellas</span>
+                                   <span className="text-brand-100 font-medium text-xs md:text-sm">Reseñas 5 estrellas</span>
                                </div>
                            </React.Fragment>
                        ))}
@@ -159,19 +162,25 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
             </div>
           </div>
           
-          <div className="lg:w-1/2 relative flex justify-center">
+          <div className="lg:w-1/2 relative flex justify-center w-full">
              <div className="relative w-full max-w-lg">
                 <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
-                {/* Image Frame Style - Dark Premium */}
-                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm">
-                    <img 
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop" 
-                      alt="Cliente usando NFC en expositor" 
-                      className="w-full h-auto rounded-[2rem] object-cover aspect-[4/3] opacity-90 hover:opacity-100 transition-opacity"
-                    />
+                {/* Image Frame Style - Dark Premium 
+                    IMPORTANT: Prepared for Video. aspect-[4/3] provides a good ratio for both image and standard video.
+                    Ensure the content inside is w-full h-full object-cover.
+                */}
+                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm overflow-hidden transform transition-transform">
+                    {/* Placeholder for future video: <video src="..." className="w-full h-full rounded-[2rem] object-cover" autoPlay loop muted playsInline /> */}
+                    <div className="aspect-[4/3] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
+                       <img 
+                        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop" 
+                        alt="Cliente usando NFC en expositor" 
+                        className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+                      />
+                    </div>
                     
                     {/* Floating Element */}
-                    <div className="absolute -bottom-8 right-8 bg-brand-900/90 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-white/20 max-w-xs animate-bounce" style={{ animationDuration: '4s' }}>
+                    <div className="absolute -bottom-8 right-8 bg-brand-900/90 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-white/20 max-w-xs animate-bounce z-20" style={{ animationDuration: '4s' }}>
                       <div className="flex items-center gap-3">
                          <div className="bg-green-500/20 p-2.5 rounded-full border border-green-500/30">
                            <CheckCircle className="text-green-400" size={20} />
@@ -670,19 +679,5 @@ export const Footer: React.FC = () => {
           </div>
       </div>
     </footer>
-  );
-};
-
-export const StickyCTA: React.FC = () => {
-  return (
-    <div className="fixed bottom-6 left-6 right-6 md:hidden z-50">
-      <a 
-        href="https://wa.me/34600000000" 
-        className="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white font-bold py-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.4)] animate-pulse border border-green-400/30"
-      >
-        <WhatsAppIcon className="w-6 h-6 text-white" />
-        Pedir Pack por WhatsApp
-      </a>
-    </div>
   );
 };

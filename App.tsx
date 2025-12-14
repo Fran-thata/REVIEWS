@@ -8,8 +8,7 @@ import {
   Pricing, 
   FAQ, 
   FinalCTA,
-  Footer,
-  StickyCTA
+  Footer
 } from './components/LandingComponents';
 
 const App: React.FC = () => {
@@ -68,7 +67,6 @@ const App: React.FC = () => {
       </main>
 
       <Footer />
-      <StickyCTA />
     </div>
   );
 };
