@@ -79,7 +79,8 @@ const SectionSubtitle = ({ children, className = "" }: { children?: React.ReactN
 );
 
 const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", variant = "primary" }: { text?: string, className?: string, variant?: 'primary' | 'outline' | 'white' | 'brand' }) => {
-  const baseClasses = "inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl group";
+  // Reduced padding (px-6 py-3) and font size (text-sm) as requested ("más chiquitito")
+  const baseClasses = "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl group";
   
   const variants = {
     primary: "bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-green-900/50",
@@ -95,7 +96,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
       rel="noopener noreferrer"
       className={`${baseClasses} ${variants[variant]} ${className}`}
     >
-      <WhatsAppIcon className={`w-5 h-5 ${variant !== 'outline' ? 'animate-whatsapp' : 'group-hover:animate-whatsapp'}`} />
+      <WhatsAppIcon className={`w-4 h-4 ${variant !== 'outline' ? 'animate-whatsapp' : 'group-hover:animate-whatsapp'}`} />
       {text}
     </a>
   );
@@ -105,7 +106,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 
 export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
   return (
-    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-12 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
       <AnimationStyles />
       {/* Background Decor - Deep Blue Vibes */}
       <div className="absolute top-0 right-0 w-full h-full opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
@@ -126,10 +127,10 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
             
             {/* NEW: Scrolling Marquee (Tools Strip) */}
             <div className="mb-12 flex flex-col items-center lg:items-start gap-4 w-full">
-              <span className="text-xs font-bold text-brand-300 uppercase tracking-widest pl-1">Menos herramientas, más resultados:</span>
+              {/* REMOVED: "Menos herramientas, más resultados" label as requested */}
               
-              {/* Added max-w-[calc(100vw-2rem)] to strictly constrain width on mobile within the padding */}
-              <div className="w-full max-w-[calc(100vw-2rem)] md:max-w-xl relative bg-brand-900/20 border border-white/10 rounded-2xl py-4 backdrop-blur-md mask-fade-sides overflow-hidden">
+              {/* Marquee Container: Removed background, borders and blur. Pure transparent. */}
+              <div className="w-full max-w-[calc(100vw-2rem)] md:max-w-xl relative py-4 mask-fade-sides overflow-hidden">
                    <div className="flex gap-6 md:gap-12 animate-marquee w-max">
                        {/* Duplicated content to create infinite seamless loop */}
                        {[...Array(12)].map((_, i) => (
@@ -157,30 +158,34 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            {/* Centered Button: justify-center applied globally */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
               <WhatsappButton />
             </div>
           </div>
           
           <div className="lg:w-1/2 relative flex justify-center w-full">
-             <div className="relative w-full max-w-lg">
+             {/* Updated Container for Video: max-w-sm to emulate phone size */}
+             <div className="relative w-full max-w-sm mx-auto">
                 <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
                 {/* Image Frame Style - Dark Premium 
-                    IMPORTANT: Prepared for Video. aspect-[4/3] provides a good ratio for both image and standard video.
+                    IMPORTANT: Prepared for Video. aspect-[9/16] provides a good ratio for vertical video.
                     Ensure the content inside is w-full h-full object-cover.
                 */}
                 <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm overflow-hidden transform transition-transform">
-                    {/* Placeholder for future video: <video src="..." className="w-full h-full rounded-[2rem] object-cover" autoPlay loop muted playsInline /> */}
-                    <div className="aspect-[4/3] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
-                       <img 
-                        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop" 
-                        alt="Cliente usando NFC en expositor" 
-                        className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+                    <div className="aspect-[9/16] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
+                       <video 
+                        src="https://res.cloudinary.com/ddpujsrsg/video/upload/v1765736203/WhatsApp_Video_2025-12-07_at_18.01.16-vmake_yfhwvd.mp4" 
+                        className="w-full h-full object-cover"
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
                       />
                     </div>
                     
                     {/* Floating Element */}
-                    <div className="absolute -bottom-8 right-8 bg-brand-900/90 backdrop-blur-xl p-5 rounded-2xl shadow-xl border border-white/20 max-w-xs animate-bounce z-20" style={{ animationDuration: '4s' }}>
+                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-xl border border-white/20 max-w-[200px] md:max-w-xs animate-bounce z-20" style={{ animationDuration: '4s' }}>
                       <div className="flex items-center gap-3">
                          <div className="bg-green-500/20 p-2.5 rounded-full border border-green-500/30">
                            <CheckCircle className="text-green-400" size={20} />
