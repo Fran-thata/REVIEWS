@@ -120,10 +120,25 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 text-white tracking-tight drop-shadow-lg break-words">
               Multiplica tus reseñas en Google y conviértelas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">más clientes</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-brand-100 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90">
+            
+            <p className="text-base sm:text-lg md:text-xl text-brand-100 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90 font-medium">
               Las malas reseñas llegan solas. Las buenas se piden en el momento exacto.
-              Nuestra Placa para reseñas hace que el cliente valore en segundos, sin pensarlo, justo cuando está más satisfecho.
             </p>
+            
+            <ul className="space-y-4 mb-10 text-left max-w-xl mx-auto lg:mx-0">
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">⚡</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Instantáneo:</strong> Acerca el móvil al expositor y valora en 1 segundo.</span>
+               </li>
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">🔑</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Llave en Mano:</strong> Llega configurado y listo para tu mostrador.</span>
+               </li>
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">🛡️</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Sin Ataduras:</strong> Pago único de por vida. Sin cuotas.</span>
+               </li>
+            </ul>
             
             {/* NEW: Scrolling Marquee (Tools Strip) */}
             <div className="mb-12 flex flex-col items-center lg:items-start gap-4 w-full">
@@ -161,7 +176,7 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
             {/* Centered Button: justify-center applied globally */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
               {/* Button "Grandecito": Increased padding, font-size, and shadow */}
-              <WhatsappButton className="w-full sm:w-auto px-10 py-4 text-base md:text-lg md:px-14 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-105" />
+              <WhatsappButton text="Quiero mi RESEÑAS ahora" className="w-full sm:w-auto px-10 py-4 text-base md:text-lg md:px-14 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-105" />
             </div>
           </div>
           
@@ -283,16 +298,21 @@ export const HowItWorks: React.FC = () => {
         </SectionSubtitle>
 
         {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-24">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-24">
            {[
              { num: "01", title: "Pides tu pack", desc: "Rellenas un formulario rápido: en menos de 1 minuto." },
              { num: "02", title: "Lo dejamos perfecto", desc: "Todo configurado y enlazado a tu ficha de Google. No tocas nada." },
              { num: "03", title: "Empieza a trabajar", desc: "Lo colocas en tu mostrador, y ese mismo día ya puedes ganar visibilidad." }
            ].map((step, idx) => (
-             <div key={idx} className="relative bg-brand-800/50 p-8 rounded-3xl border border-white/5 hover:bg-brand-800 transition-colors backdrop-blur-md">
-                <div className="text-4xl font-extrabold text-white/20 mb-4">{step.num}</div>
-                <h4 className="text-xl font-bold text-white mb-3">{step.title}</h4>
-                <p className="text-brand-200/70 font-medium leading-relaxed">{step.desc}</p>
+             <div key={idx} className="bg-brand-600 p-10 rounded-[2.5rem] relative group hover:scale-[1.02] transition-all duration-300 shadow-xl border border-brand-500/30 overflow-hidden">
+                 <div className="absolute -top-6 -right-6 text-[8rem] font-black text-white/20 select-none z-0 leading-none">
+                    {step.num}
+                 </div>
+                 <div className="relative z-10">
+                    <div className="text-6xl font-extrabold text-white mb-6">{step.num}</div>
+                    <h4 className="text-2xl font-bold text-white mb-4">{step.title}</h4>
+                    <p className="text-brand-100 font-medium leading-relaxed">{step.desc}</p>
+                 </div>
              </div>
            ))}
         </div>
