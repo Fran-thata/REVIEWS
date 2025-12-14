@@ -106,7 +106,7 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 
 export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
   return (
-    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-8 pb-16 lg:pt-24 lg:pb-24 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 pt-12 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
       <AnimationStyles />
       {/* Background Decor - Deep Blue Vibes */}
       <div className="absolute top-0 right-0 w-full h-full opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
@@ -114,78 +114,85 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
           
-          <div className="lg:w-1/2 w-full text-center lg:text-left flex flex-col items-center lg:items-start">
-            
-            {/* H1 - Compact line-height */}
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-[1.1] mb-3 text-white tracking-tight drop-shadow-lg max-w-2xl">
+          <div className="lg:w-1/2 text-center lg:text-left w-full">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 text-white tracking-tight drop-shadow-lg break-words">
               Multiplica tus reseñas en Google y conviértelas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-300">más clientes</span>
             </h1>
             
-            {/* Subtitle - Close to H1 */}
-            <p className="text-base sm:text-lg text-brand-100/90 mb-6 max-w-lg leading-snug">
-              Las malas reseñas llegan solas. <br className="hidden sm:block"/>
-              Las buenas se piden en el momento exacto.
+            <p className="text-base sm:text-lg md:text-xl text-brand-100 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed opacity-90 font-medium">
+              Las malas reseñas llegan solas. Las buenas se piden en el momento exacto.
             </p>
             
-            {/* Benefits Block - Vertical, Solid, Compact */}
-            <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-4 mb-5 backdrop-blur-sm text-left">
-               <div className="space-y-3">
-                   <div className="flex items-start gap-3">
-                       <span className="text-xl shrink-0">⚡</span>
-                       <p className="text-sm text-brand-50 leading-tight">
-                         <span className="font-bold text-white">Instantáneo:</span> Acerca el móvil al expositor y valora en 1 segundo.
-                       </p>
+            <ul className="space-y-4 mb-10 text-left max-w-xl mx-auto lg:mx-0">
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">⚡</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Instantáneo:</strong> Acerca el móvil al expositor y valora en 1 segundo.</span>
+               </li>
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">🔑</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Llave en Mano:</strong> Llega configurado y listo para tu mostrador.</span>
+               </li>
+               <li className="flex items-start gap-3">
+                 <span className="text-xl shrink-0">🛡️</span>
+                 <span className="text-brand-100 text-sm sm:text-base leading-tight mt-0.5"><strong className="text-white block sm:inline">Sin Ataduras:</strong> Pago único de por vida. Sin cuotas.</span>
+               </li>
+            </ul>
+            
+            {/* NEW: Scrolling Marquee (Tools Strip) */}
+            <div className="mb-12 flex flex-col items-center lg:items-start gap-4 w-full">
+              {/* REMOVED: "Menos herramientas, más resultados" label as requested */}
+              
+              {/* Marquee Container: Removed background, borders and blur. Pure transparent. */}
+              <div className="w-full max-w-[calc(100vw-2rem)] md:max-w-xl relative py-4 mask-fade-sides overflow-hidden">
+                   <div className="flex gap-6 md:gap-12 animate-marquee w-max">
+                       {/* Duplicated content to create infinite seamless loop */}
+                       {[...Array(12)].map((_, i) => (
+                           <React.Fragment key={i}>
+                               {/* Item 1: Google */}
+                               <div className="flex items-center gap-2 md:gap-3 shrink-0">
+                                   <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full flex items-center justify-center shadow-lg p-1 md:p-1.5">
+                                       <GoogleLogo />
+                                   </div>
+                                   <span className="text-white font-bold text-base md:text-lg tracking-tight">Google</span>
+                               </div>
+
+                               {/* Item 2: Stars */}
+                               <div className="flex items-center gap-2 md:gap-3 shrink-0">
+                                   <div className="flex gap-0.5">
+                                       {[1,2,3,4,5].map(star => (
+                                           <Star key={star} className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" />
+                                       ))}
+                                   </div>
+                                   <span className="text-brand-100 font-medium text-xs md:text-sm">Reseñas 5 estrellas</span>
+                               </div>
+                           </React.Fragment>
+                       ))}
                    </div>
-                   <div className="flex items-start gap-3">
-                       <span className="text-xl shrink-0">🔑</span>
-                       <p className="text-sm text-brand-50 leading-tight">
-                         <span className="font-bold text-white">Llave en Mano:</span> Llega configurado y listo para tu mostrador.
-                       </p>
-                   </div>
-                   <div className="flex items-start gap-3">
-                       <span className="text-xl shrink-0">🛡️</span>
-                       <p className="text-sm text-brand-50 leading-tight">
-                         <span className="font-bold text-white">Sin Ataduras:</span> Pago único de por vida. Sin cuotas.
-                       </p>
-                   </div>
-               </div>
+              </div>
             </div>
 
-            {/* Social Proof Text - Immediately above CTA */}
-            <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start w-full">
-                <div className="flex text-yellow-400 gap-0.5">
-                    {[1,2,3,4,5].map(s => <Star key={s} size={16} fill="currentColor" className="text-yellow-400" />)}
-                </div>
-                <span className="text-sm font-bold text-white">Reseñas 5 estrellas en Google</span>
-            </div>
-
-            {/* CTA Button */}
-            <div className="w-full sm:max-w-md flex flex-col items-center lg:items-start">
-               <WhatsappButton 
-                 text="Quiero mis reseñas ahora" 
-                 className="w-full text-lg py-4 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-[1.02]" 
-               />
-               
-               {/* Microcopy */}
-               <p className="text-xs text-brand-200/70 mt-3 text-center w-full">
-                 Respuesta inmediata por WhatsApp · Sin compromiso
-               </p>
+            {/* Centered Button: justify-center applied globally */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
+              {/* Button "Grandecito": Increased padding, font-size, and shadow */}
+              <WhatsappButton text="Quiero mis RESEÑAS ahora" className="w-full sm:w-auto px-10 py-4 text-base md:text-lg md:px-14 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all hover:scale-105" />
             </div>
           </div>
           
-          {/* Video Section - Visually below CTA on mobile */}
-          <div className="lg:w-1/2 w-full mt-8 lg:mt-0 flex justify-center relative">
-             {/* The Video Container - Vertical */}
-             <div className="relative w-full max-w-[260px] sm:max-w-xs mx-auto">
-                <div className="absolute inset-0 bg-brand-500/20 rounded-full blur-[60px] opacity-40"></div>
-                
-                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-1.5 rounded-[2rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm">
-                    <div className="aspect-[9/16] w-full relative rounded-[1.7rem] overflow-hidden bg-black">
+          <div className="lg:w-1/2 relative flex justify-center w-full">
+             {/* Updated Container for Video: max-w-sm to emulate phone size */}
+             <div className="relative w-full max-w-sm mx-auto">
+                <div className="absolute inset-0 bg-brand-500/30 rounded-full blur-[80px] opacity-50"></div>
+                {/* Image Frame Style - Dark Premium 
+                    IMPORTANT: Prepared for Video. aspect-[9/16] provides a good ratio for vertical video.
+                    Ensure the content inside is w-full h-full object-cover.
+                */}
+                <div className="relative bg-gradient-to-b from-white/10 to-white/5 p-2 rounded-[2.5rem] shadow-2xl ring-1 ring-white/10 backdrop-blur-sm overflow-hidden transform transition-transform">
+                    <div className="aspect-[9/16] w-full relative rounded-[2rem] overflow-hidden bg-brand-900/50">
                        <video 
                         src="https://res.cloudinary.com/ddpujsrsg/video/upload/v1765736203/WhatsApp_Video_2025-12-07_at_18.01.16-vmake_yfhwvd.mp4" 
-                        className="w-full h-full object-cover opacity-90"
+                        className="w-full h-full object-cover"
                         autoPlay 
                         loop 
                         muted 
@@ -193,42 +200,22 @@ export const Hero: React.FC<{ onCtaClick: () => void }> = () => {
                       />
                     </div>
                     
-                    {/* Floating Element (Marquee style notification) - Preserved as "estrellas flotantes" */}
-                    <div className="absolute -bottom-5 -right-5 md:-right-8 bg-brand-900/95 backdrop-blur-xl p-3 rounded-xl shadow-xl border border-white/20 animate-bounce z-20 max-w-[180px]" style={{ animationDuration: '4s' }}>
+                    {/* Floating Element */}
+                    <div className="absolute -bottom-6 -right-6 md:-right-8 bg-brand-900/90 backdrop-blur-xl p-4 md:p-5 rounded-2xl shadow-xl border border-white/20 max-w-[200px] md:max-w-xs animate-bounce z-20" style={{ animationDuration: '4s' }}>
                       <div className="flex items-center gap-3">
-                         <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center p-1.5 shadow-sm">
-                             <GoogleLogo />
+                         <div className="bg-green-500/20 p-2.5 rounded-full border border-green-500/30">
+                           <CheckCircle className="text-green-400" size={20} />
                          </div>
                          <div>
-                           <div className="flex gap-0.5 mb-0.5">
-                             {[1,2,3,4,5].map(s => <Star key={s} size={10} className="fill-yellow-400 text-yellow-400" />)}
-                           </div>
-                           <p className="font-bold text-white text-[10px] leading-none">Nueva Reseña</p>
+                           <p className="font-bold text-white text-sm">Reseña Recibida</p>
+                           <p className="text-xs text-brand-200 font-medium">Hace 1 momento</p>
                          </div>
                       </div>
                     </div>
                 </div>
              </div>
           </div>
-
         </div>
-        
-        {/* Marquee Strip - Kept at bottom to satisfy "Mantener... NO TOCAR" regarding general floating stars ambience, but moved out of critical flow */}
-        <div className="mt-12 w-full overflow-hidden mask-fade-sides opacity-30 pointer-events-none lg:opacity-50">
-             <div className="flex gap-12 animate-marquee w-max">
-                 {[...Array(10)].map((_, i) => (
-                     <div key={i} className="flex items-center gap-3">
-                         <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center p-1">
-                             <GoogleLogo />
-                         </div>
-                         <div className="flex gap-0.5">
-                             {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-yellow-400 text-yellow-400" />)}
-                         </div>
-                     </div>
-                 ))}
-             </div>
-        </div>
-
       </div>
     </section>
   );
