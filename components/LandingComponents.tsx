@@ -219,18 +219,18 @@ export const Comparison: React.FC = () => {
         </SectionSubtitle>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mt-12">
-          {/* Card 1 - Dark/Negative */}
-          <div className="bg-brand-900/50 p-10 rounded-[2.5rem] border border-white/5 hover:border-red-500/30 transition-all duration-300 group backdrop-blur-sm">
-            <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-red-500/20">
+          {/* Card 1 - Dark/Negative -> UPDATED BACKGROUND TO MATCH CARD 2 */}
+          <div className="bg-gradient-to-br from-brand-800 to-brand-900 p-10 rounded-[2.5rem] border border-white/10 hover:border-red-500/30 transition-all duration-300 group relative overflow-hidden">
+            <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-red-500/20 relative z-10">
               <XCircle className="text-red-500" size={32} />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">🛑 El negocio que pasa desapercibido</h3>
-            <div className="space-y-4 text-slate-400 mb-8 font-medium">
+            <h3 className="text-2xl font-bold text-white mb-4 relative z-10">🛑 El negocio que pasa desapercibido</h3>
+            <div className="space-y-4 text-slate-300 mb-8 font-medium relative z-10">
               <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Pocas reseñas, desactualizadas o incoherentes.</p>
               <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> Das buen servicio, pero Google solo muestra reseñas antiguas.</p>
               <p className="flex items-start gap-3"><span className="text-red-500 font-bold mt-1">•</span> El cliente piensa: “Si nadie comenta… por algo será.”</p>
             </div>
-            <div className="p-5 bg-red-950/30 rounded-2xl border border-red-500/20">
+            <div className="p-5 bg-red-950/20 rounded-2xl border border-red-500/20 relative z-10">
               <p className="text-red-300 font-semibold text-sm">
                 Consecuencia: elige otro local y tú ni te enteras, pierdes la venta sin saber por qué.
               </p>
