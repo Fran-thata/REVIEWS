@@ -16,7 +16,10 @@ import {
   Shield,
   X,
   Eye,
-  EyeOff
+  EyeOff,
+  Smartphone,
+  QrCode,
+  ArrowRight
 } from 'lucide-react';
 
 // --- Custom Animations Style Component ---
@@ -331,39 +334,44 @@ export const HowItWorks: React.FC = () => {
 
         <div className="space-y-8 max-w-6xl mx-auto">
           
-          <div className="bg-brand-800 rounded-[2.5rem] p-8 md:p-14 border border-white/5 flex flex-col md:flex-row items-center gap-12 shadow-2xl relative overflow-hidden">
+          {/* Expositor - Updated to match vertical card with golden stars */}
+          <div className="bg-brand-800 rounded-[2.5rem] p-8 md:p-14 border border-white/5 flex flex-col items-center shadow-2xl relative overflow-hidden text-center">
              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-600/10 rounded-full blur-[80px] -mr-20 -mt-20"></div>
             
-            <div className="md:w-1/3 flex justify-center relative z-10">
-               <div className="w-64 h-64 bg-brand-900 rounded-3xl flex items-center justify-center text-brand-700 border border-white/5 shadow-inner">
-                  <Layout size={80} className="text-brand-600" />
-               </div>
+            {/* Top Visual: The White Card */}
+            <div className="relative z-10 mb-8">
+               <img 
+                 src="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765908680/WhatsApp_Image_2025-12-16_at_19.07.00_ilgwu2.jpg" 
+                 alt="Expositor Google Reviews" 
+                 className="w-64 md:w-72 h-auto rounded-3xl shadow-2xl mx-auto border-4 border-white transform hover:scale-105 transition-transform duration-500"
+               />
             </div>
-            <div className="md:w-2/3 relative z-10">
-               <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-green-500/20 border border-green-500/30 text-green-300 text-xs font-bold uppercase tracking-wider mb-4">
-                  Recomendado
-               </div>
-               <h3 className="text-3xl font-extrabold text-white mb-6">
+
+            {/* Text Content */}
+            <div className="relative z-10 w-full max-w-2xl">
+               <h3 className="text-3xl font-extrabold text-white mb-8">
                  EL EXPOSITOR (Tu imán silencioso)
                </h3>
-               <ul className="space-y-4 mb-8">
+               <ul className="space-y-4 mb-8 text-left max-w-lg mx-auto">
                  {[
                    "Perfecto para el mostrador.",
                    "Funciona solo, sin hablar por ti.",
                    "Convierte el momento de pago en una reseña natural.",
                    "Siempre visible. Siempre activo."
                  ].map((item, i) => (
-                   <li key={i} className="flex items-center gap-4 text-brand-100 font-medium">
-                     <div className="w-6 h-6 rounded-full bg-brand-600/30 flex items-center justify-center shrink-0 border border-brand-500/30">
-                       <CheckCircle size={14} className="text-brand-400"/>
+                   <li key={i} className="flex items-start gap-4 text-brand-100 font-medium text-lg">
+                     <div className="shrink-0 mt-1">
+                        <CheckCircle size={20} className="text-yellow-400" />
                      </div>
                      {item}
                    </li>
                  ))}
                </ul>
-               <p className="text-lg font-bold text-brand-200 bg-white/5 inline-block px-6 py-3 rounded-xl border border-white/10">
-                 Cliente satisfecho = Reseña asegurada
-               </p>
+               <div className="flex items-center justify-center gap-2 text-lg font-bold text-white mt-8">
+                 <span>Cliente satisfecho</span>
+                 <ArrowRight className="w-5 h-5 text-brand-400" />
+                 <span>Reseña asegurada</span>
+               </div>
             </div>
           </div>
 
@@ -404,7 +412,7 @@ export const HowItWorks: React.FC = () => {
     </section>
   );
 };
-
+// ... (SocialProof, ServiceIncluded, Pricing, FAQ, FinalCTA, Footer remain same)
 export const SocialProof: React.FC = () => {
   return (
     <section className="py-24 bg-brand-950 border-t border-white/5">
