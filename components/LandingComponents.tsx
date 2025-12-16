@@ -222,7 +222,7 @@ export const Comparison: React.FC = () => {
 
       <div className="container mx-auto px-4">
         <SectionTitle>En Google solo existen dos tipos de negocio:</SectionTitle>
-        <SectionSubtitle className="text-xl md:text-2xl">
+        <SectionSubtitle>
           Unos pasan desapercibidos. Otros inspiran confianza. <span className="text-white font-extrabold">¿Cuál es el tuyo?</span>
         </SectionSubtitle>
         
@@ -470,18 +470,21 @@ export const HowItWorks: React.FC = () => {
     </section>
   );
 };
-// ... (SocialProof, ServiceIncluded, Pricing, FAQ, FinalCTA, Footer remain same)
+
 export const SocialProof: React.FC = () => {
   return (
-    <section className="py-24 bg-brand-950 border-t border-white/5">
+    <section className="py-24 bg-brand-950 border-t border-white/5 overflow-hidden">
       <div className="container mx-auto px-4">
         <SectionTitle>No importa lo que decimos nosotros, importa lo que consiguen ellos.</SectionTitle>
         <SectionSubtitle>
            Negocios distintos. Problemas diferentes. Un mismo resultado: reseñas que por fin llegan.
         </SectionSubtitle>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
-           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
+        {/* Increased container max-width to allow image to be bigger */}
+        <div className="grid md:grid-cols-2 gap-12 w-full max-w-[1400px] mx-auto mt-12 items-center relative">
+           
+           {/* Left Card - Restaurant */}
+           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors h-full flex flex-col justify-center">
               <div className="flex items-center gap-4 mb-8">
                  <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">R</div>
                  <h3 className="text-xl font-bold text-white">Restaurante/local físico</h3>
@@ -503,27 +506,34 @@ export const SocialProof: React.FC = () => {
               </div>
            </div>
 
-           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors">
-              <div className="flex items-center gap-4 mb-8">
-                 <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">C</div>
-                 <h3 className="text-xl font-bold text-white">Clínica/servicio</h3>
-              </div>
-              <div className="space-y-6">
-                 <div className="flex flex-col gap-1">
-                    <span className="text-xs font-bold text-red-400 uppercase tracking-wide">El problema</span>
-                    <span className="text-slate-300 font-medium">Vergüenza al pedir reseñas. Momento incómodo tras la sesión.</span>
-                 </div>
-                 <div className="w-full h-px bg-white/10"></div>
-                 <div className="flex flex-col gap-1">
-                    <span className="text-xs font-bold text-brand-400 uppercase tracking-wide">El cambio</span>
-                    <span className="text-slate-300 font-medium">Tarjeta profesional al terminar cada sesión.</span>
-                 </div>
-                 <div className="p-4 bg-green-900/20 rounded-xl border border-green-500/20">
-                    <span className="block text-xs font-bold text-green-400 uppercase tracking-wide mb-1">El resultado</span>
-                    <span className="text-white font-bold text-lg">90% valoraciones al instante. Sin forzar. Sin incomodar.</span>
-                 </div>
-              </div>
+           {/* Right Column - Image Only Composition */}
+           {/* Removed max-w-lg constraint to let image grow */}
+           <div className="relative w-full mx-auto h-full flex flex-col justify-center items-center">
+                <div className="relative w-full md:scale-110 lg:scale-125 transition-transform duration-500 origin-center z-10">
+                    {/* The Image */}
+                    <img 
+                        src="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765915572/JJ-removebg-preview_vzq6uz.png" 
+                        alt="Comparativa" 
+                        className="w-full h-auto object-contain relative z-10 drop-shadow-2xl"
+                    />
+                    
+                    {/* Top Label - Manual Search */}
+                    <div className="absolute top-[5%] inset-x-0 flex justify-center z-20">
+                        <span className="bg-gray-900/90 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-md border border-white/10 shadow-lg">
+                            SIN EXPOSITOR
+                        </span>
+                    </div>
+
+                    {/* Bottom Button - Instant Card */}
+                    <div className="absolute bottom-[8%] inset-x-0 flex justify-center z-20">
+                         <div className="bg-brand-600 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.5)] flex items-center gap-2 transform hover:scale-105 transition-transform border border-white/10">
+                            <Zap className="w-3 h-3 md:w-4 md:h-4 text-yellow-400 fill-yellow-400" />
+                            ESTRATEGIA + RESEÑAS
+                         </div>
+                    </div>
+                </div>
            </div>
+
         </div>
       </div>
     </section>
