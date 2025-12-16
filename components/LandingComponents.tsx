@@ -257,7 +257,7 @@ export const Comparison: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-brand-900 p-8 md:p-10 rounded-[2.5rem] border border-brand-400/30 shadow-2xl relative overflow-hidden flex flex-col transform md:-translate-y-4">
+          <div className="bg-brand-900 p-8 md:p-10 rounded-[2.5rem] border border-brand-400/30 shadow-2xl relative overflow-hidden flex flex-col">
             <div className="flex justify-center mb-8">
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
                   <Star className="text-brand-900 fill-brand-900" size={32} />
@@ -399,16 +399,16 @@ export const HowItWorks: React.FC = () => {
                      <div className="shrink-0 mt-1">
                         <CheckCircle className="w-6 h-6 text-amber-400" />
                      </div>
-                     <p className="text-brand-100 font-medium text-lg leading-snug">
-                       Pensada para profesionales por cita: <span className="text-white font-semibold block mt-1">Salud, bienestar, imagen y servicios 1 a 1.</span>
+                     <p className="text-brand-100 font-medium text-lg leading-tight">
+                       Pensada para profesionales por cita: <span className="text-white font-semibold block">Salud, bienestar, imagen y servicios 1 a 1.</span>
                      </p>
                   </li>
                   <li className="flex items-start gap-4">
                      <div className="shrink-0 mt-1">
                         <CheckCircle className="w-6 h-6 text-amber-400" />
                      </div>
-                     <p className="text-brand-100 font-medium text-lg leading-snug">
-                       Al final de la sesión, <span className="text-white font-semibold block mt-1">el cliente satisfecho deja una reseña de calidad.</span>
+                     <p className="text-brand-100 font-medium text-lg leading-tight">
+                       Al final de la sesión, <span className="text-white font-semibold block">el cliente satisfecho deja una reseña de calidad.</span>
                      </p>
                   </li>
                </ul>
@@ -526,7 +526,8 @@ export const SocialProof: React.FC = () => {
 
                     {/* Bottom Button - Instant Card */}
                     <div className="absolute bottom-[8%] inset-x-0 flex justify-center z-20">
-                         <div className="bg-brand-600 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.5)] flex items-center gap-2 transform hover:scale-105 transition-transform border border-white/10">
+                         {/* CHANGING THIS DIV TO MATCH THE TOP SPAN STYLE */}
+                         <div className="bg-gray-900/90 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-md border border-white/10 shadow-lg flex items-center gap-2 transform hover:scale-105 transition-transform">
                             <Zap className="w-3 h-3 md:w-4 md:h-4 text-yellow-400 fill-yellow-400" />
                             ESTRATEGIA + RESEÑAS
                          </div>
