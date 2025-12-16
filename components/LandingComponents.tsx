@@ -114,9 +114,18 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
 interface BeforeAfterSliderProps {
   beforeImage: string;
   afterImage: string;
+  title?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
 }
 
-const BeforeAfterSlider = ({ beforeImage, afterImage }: BeforeAfterSliderProps) => {
+const BeforeAfterSlider = ({ 
+  beforeImage, 
+  afterImage, 
+  title, 
+  beforeLabel = "ANTES", 
+  afterLabel = "DESPUÉS" 
+}: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = useState(false);
@@ -156,57 +165,62 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: BeforeAfterSliderProps) 
   }, []);
 
   return (
-    <div 
-      ref={containerRef}
-      className="relative w-full aspect-video select-none group cursor-ew-resize overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white/10"
-      onMouseMove={onMouseMove}
-      onMouseDown={onMouseDown}
-      onTouchMove={onTouchMove}
-      onClick={onClick}
-    >
-      {/* After Image (Background - Right side - "Después") */}
-      <img 
-        src={afterImage}
-        alt="Después" 
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
-        DESPUÉS
-      </div>
-
-      {/* Before Image (Foreground - Left side - "Antes" - Clipped) */}
+    <div className="flex flex-col gap-10 w-full">
+      {title && <h3 className="text-2xl font-black text-white text-center uppercase tracking-wider mt-4">{title}</h3>}
       <div 
-        className="absolute inset-0 w-full h-full overflow-hidden"
-        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        ref={containerRef}
+        className="relative w-full aspect-video select-none group cursor-ew-resize overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white/10"
+        onMouseMove={onMouseMove}
+        onMouseDown={onMouseDown}
+        onTouchMove={onTouchMove}
+        onClick={onClick}
       >
+        {/* After Image (Background - Right side - "Después") */}
         <img 
-          src={beforeImage}
-          alt="Antes" 
+          src={afterImage}
+          alt={afterLabel} 
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute top-4 left-4 bg-brand-600/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
-          ANTES
+        {/* CLEAN MINIMAL LABEL - No background, no button style - z-10 */}
+        <div className="absolute top-8 right-8 text-white text-sm font-black tracking-widest z-10 pointer-events-none uppercase drop-shadow-md opacity-90">
+          {afterLabel}
         </div>
-      </div>
 
-      {/* Slider Handle */}
-      <div 
-        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
-        style={{ left: `${sliderPosition}%` }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl transform transition-transform hover:scale-110">
-           <div className="flex gap-0.5 pointer-events-none">
-              <ChevronDown className="w-4 h-4 text-brand-900 rotate-90" />
-              <ChevronDown className="w-4 h-4 text-brand-900 -rotate-90" />
-           </div>
+        {/* Before Image (Foreground - Left side - "Antes" - Clipped) - z-20 to cover background label */}
+        <div 
+          className="absolute inset-0 w-full h-full overflow-hidden z-20"
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        >
+          <img 
+            src={beforeImage}
+            alt={beforeLabel} 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* CLEAN MINIMAL LABEL - No background, no button style */}
+          <div className="absolute top-8 left-8 text-white text-sm font-black tracking-widest z-10 pointer-events-none uppercase drop-shadow-md opacity-90">
+            {beforeLabel}
+          </div>
         </div>
-      </div>
-      
-      {/* Interaction hint */}
-      <div className="absolute bottom-6 inset-x-0 flex justify-center z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-         <span className="bg-black/50 text-white text-[10px] px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
-           Desliza para comparar
-         </span>
+
+        {/* Slider Handle - z-30 to be on top */}
+        <div 
+          className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-30 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+          style={{ left: `${sliderPosition}%` }}
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl transform transition-transform hover:scale-110">
+             <div className="flex gap-0.5 pointer-events-none">
+                <ChevronDown className="w-4 h-4 text-brand-900 rotate-90" />
+                <ChevronDown className="w-4 h-4 text-brand-900 -rotate-90" />
+             </div>
+          </div>
+        </div>
+        
+        {/* Interaction hint */}
+        <div className="absolute bottom-6 inset-x-0 flex justify-center z-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+           <span className="bg-black/50 text-white text-[10px] px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+             Desliza para comparar
+           </span>
+        </div>
       </div>
     </div>
   );
@@ -584,19 +598,25 @@ export const SocialProof: React.FC = () => {
 
         {/* Container for cases */}
         <div className="max-w-6xl mx-auto mt-12 grid md:grid-cols-2 gap-8">
-            {/* Case 1: Restaurant/Local */}
+            {/* Case 1: RESTAURANTE (Moved to First per request) */}
             <div className="relative w-full">
                     <BeforeAfterSlider 
-                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921007/WhatsApp_Image_2025-12-16_at_22.34.24_nurbit.jpg"
-                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921006/WhatsApp_Image_2025-12-16_at_22.34.24_1_i2vqwk.jpg"
+                        title="RESTAURANTE"
+                        beforeLabel="ANTES"
+                        afterLabel="DESPUÉS"
+                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921774/WhatsApp_Image_2025-12-16_at_22.34.24_2_xc4xdd.jpg"
+                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921773/WhatsApp_Image_2025-12-16_at_22.40.40_ybpgfz.jpg"
                     />
             </div>
 
-            {/* Case 2: Profesional/Freelance */}
+            {/* Case 2: FISIOTERAPEUTA (Moved to Second) */}
             <div className="relative w-full">
                     <BeforeAfterSlider 
-                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921774/WhatsApp_Image_2025-12-16_at_22.34.24_2_xc4xdd.jpg"
-                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921773/WhatsApp_Image_2025-12-16_at_22.40.40_ybpgfz.jpg"
+                        title="FISIOTERAPEUTA"
+                        beforeLabel="ANTES"
+                        afterLabel="DESPUÉS"
+                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921007/WhatsApp_Image_2025-12-16_at_22.34.24_nurbit.jpg"
+                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921006/WhatsApp_Image_2025-12-16_at_22.34.24_1_i2vqwk.jpg"
                     />
             </div>
 
