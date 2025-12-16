@@ -369,29 +369,58 @@ export const HowItWorks: React.FC = () => {
                </ul>
                <div className="flex items-center justify-center gap-2 text-lg font-bold text-white mt-8">
                  <span>Cliente satisfecho</span>
-                 <ArrowRight className="w-5 h-5 text-brand-400" />
+                 <ArrowRight className="w-5 h-5 text-yellow-400" />
                  <span>Reseña asegurada</span>
                </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
-               <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-6 border border-yellow-500/20">
-                  <Star className="text-yellow-500 fill-yellow-500" size={24} />
+            {/* TARJETA PROFESIONAL - UPDATED DESIGN */}
+            <div className="bg-brand-800 rounded-[2.5rem] p-8 md:p-10 border border-white/5 shadow-lg flex flex-col items-center text-center relative overflow-hidden group hover:border-brand-500/30 transition-all">
+               {/* Image from URL */}
+               <div className="mb-8 relative z-10">
+                  <img 
+                     src="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765909419/WhatsApp_Image_2025-12-16_at_19.22.57_cevarx.jpg" 
+                     alt="Tarjeta Profesional" 
+                     className="w-48 md:w-56 h-auto rounded-2xl shadow-2xl mx-auto transform group-hover:scale-105 transition-transform duration-500 border-4 border-white"
+                  />
                </div>
-               <h3 className="text-2xl font-bold text-white mb-2">
-                 TARJETA PROFESIONAL
+               
+               <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2 uppercase tracking-tight leading-none">
+                 TARJETA<br/>PROFESIONAL
                </h3>
-               <p className="text-sm font-bold text-brand-400 mb-6 uppercase tracking-wide">Confianza + reseñas</p>
-               <p className="text-brand-200/80 mb-8 leading-relaxed">
-                 Pensada para profesionales por cita: salud, bienestar, imagen y servicios 1 a 1. 
-                 Al final de la sesión, cuando el cliente está satisfecho, consigues una reseña de calidad.
+               <p className="text-sm font-bold text-amber-400 mb-8 uppercase tracking-[0.2em]">
+                 CONFIANZA + RESEÑAS
                </p>
-               <p className="font-bold text-white border-t border-white/10 pt-6">Trato 1 a 1 = Reseña premium</p>
+
+               <ul className="space-y-6 mb-8 text-left w-full max-w-sm mx-auto">
+                  <li className="flex items-start gap-4">
+                     <div className="shrink-0 mt-1">
+                        <CheckCircle className="w-6 h-6 text-amber-400" />
+                     </div>
+                     <p className="text-brand-100 font-medium text-lg leading-snug">
+                       Pensada para profesionales por cita: <span className="text-white font-semibold block mt-1">Salud, bienestar, imagen y servicios 1 a 1.</span>
+                     </p>
+                  </li>
+                  <li className="flex items-start gap-4">
+                     <div className="shrink-0 mt-1">
+                        <CheckCircle className="w-6 h-6 text-amber-400" />
+                     </div>
+                     <p className="text-brand-100 font-medium text-lg leading-snug">
+                       Al final de la sesión, <span className="text-white font-semibold block mt-1">el cliente satisfecho deja una reseña de calidad.</span>
+                     </p>
+                  </li>
+               </ul>
+
+               <div className="mt-auto pt-6 border-t border-white/10 w-full">
+                   <p className="text-lg font-bold text-white flex items-center justify-center gap-2">
+                     Trato 1 a 1 <ArrowRight className="w-5 h-5 text-amber-400"/> Reseña premium
+                   </p>
+               </div>
             </div>
 
-            <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg">
+            <div className="bg-brand-800 rounded-[2.5rem] p-10 border border-white/5 shadow-lg flex flex-col justify-center">
                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
                   <Users className="text-blue-400" size={24} />
                </div>
