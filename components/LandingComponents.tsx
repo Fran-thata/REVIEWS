@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { 
   Star, 
   CheckCircle, 
@@ -107,6 +107,108 @@ const WhatsappButton = ({ text = "Quiero mi Pack por WhatsApp", className = "", 
       <WhatsAppIcon className={`w-4 h-4 ${variant !== 'outline' ? 'animate-whatsapp' : 'group-hover:animate-whatsapp'}`} />
       {text}
     </a>
+  );
+};
+
+// --- Before/After Slider Component ---
+interface BeforeAfterSliderProps {
+  beforeImage: string;
+  afterImage: string;
+}
+
+const BeforeAfterSlider = ({ beforeImage, afterImage }: BeforeAfterSliderProps) => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const handleMove = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = Math.min(Math.max((x / rect.width) * 100, 0), 100);
+    setSliderPosition(percent);
+  }, []);
+
+  const onMouseDown = () => setIsResizing(true);
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (isResizing) handleMove(e.clientX);
+  };
+  
+  // Touch support
+  const onTouchMove = (e: React.TouchEvent) => {
+    handleMove(e.touches[0].clientX);
+  };
+
+  // Allow clicking anywhere to jump
+  const onClick = (e: React.MouseEvent) => {
+     handleMove(e.clientX);
+  };
+  
+  // Global mouse up to stop resizing if cursor leaves element
+  useEffect(() => {
+    const handleGlobalMouseUp = () => setIsResizing(false);
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('touchend', handleGlobalMouseUp);
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('touchend', handleGlobalMouseUp);
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="relative w-full aspect-video select-none group cursor-ew-resize overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white/10"
+      onMouseMove={onMouseMove}
+      onMouseDown={onMouseDown}
+      onTouchMove={onTouchMove}
+      onClick={onClick}
+    >
+      {/* After Image (Background - Right side - "Después") */}
+      <img 
+        src={afterImage}
+        alt="Después" 
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
+        DESPUÉS
+      </div>
+
+      {/* Before Image (Foreground - Left side - "Antes" - Clipped) */}
+      <div 
+        className="absolute inset-0 w-full h-full overflow-hidden"
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      >
+        <img 
+          src={beforeImage}
+          alt="Antes" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute top-4 left-4 bg-brand-600/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
+          ANTES
+        </div>
+      </div>
+
+      {/* Slider Handle */}
+      <div 
+        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+        style={{ left: `${sliderPosition}%` }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl transform transition-transform hover:scale-110">
+           <div className="flex gap-0.5 pointer-events-none">
+              <ChevronDown className="w-4 h-4 text-brand-900 rotate-90" />
+              <ChevronDown className="w-4 h-4 text-brand-900 -rotate-90" />
+           </div>
+        </div>
+      </div>
+      
+      {/* Interaction hint */}
+      <div className="absolute bottom-6 inset-x-0 flex justify-center z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+         <span className="bg-black/50 text-white text-[10px] px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+           Desliza para comparar
+         </span>
+      </div>
+    </div>
   );
 };
 
@@ -480,60 +582,23 @@ export const SocialProof: React.FC = () => {
            Negocios distintos. Problemas diferentes. Un mismo resultado: reseñas que por fin llegan.
         </SectionSubtitle>
 
-        {/* Increased container max-width to allow image to be bigger */}
-        <div className="grid md:grid-cols-2 gap-12 w-full max-w-[1400px] mx-auto mt-12 items-center relative">
-           
-           {/* Left Card - Restaurant */}
-           <div className="bg-brand-900 p-10 rounded-[2rem] border border-white/5 shadow-lg hover:bg-brand-800 transition-colors h-full flex flex-col justify-center">
-              <div className="flex items-center gap-4 mb-8">
-                 <div className="w-14 h-14 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-900">R</div>
-                 <h3 className="text-xl font-bold text-white">Restaurante/local físico</h3>
-              </div>
-              <div className="space-y-6">
-                 <div className="flex flex-col gap-1">
-                    <span className="text-xs font-bold text-red-400 uppercase tracking-wide">El problema</span>
-                    <span className="text-slate-300 font-medium">Clientes contentos, 16 reseñas en 2 años.</span>
-                 </div>
-                 <div className="w-full h-px bg-white/10"></div>
-                 <div className="flex flex-col gap-1">
-                    <span className="text-xs font-bold text-brand-400 uppercase tracking-wide">El cambio</span>
-                    <span className="text-slate-300 font-medium">Expositor colocado en el mostrador.</span>
-                 </div>
-                 <div className="p-4 bg-green-900/20 rounded-xl border border-green-500/20">
-                    <span className="block text-xs font-bold text-green-400 uppercase tracking-wide mb-1">El resultado</span>
-                    <span className="text-white font-bold text-lg">50+ reseñas el primer mes. Nº1 del barrio en google.</span>
-                 </div>
-              </div>
-           </div>
-
-           {/* Right Column - Image Only Composition */}
-           {/* Removed max-w-lg constraint to let image grow */}
-           <div className="relative w-full mx-auto h-full flex flex-col justify-center items-center">
-                <div className="relative w-full md:scale-110 lg:scale-125 transition-transform duration-500 origin-center z-10">
-                    {/* The Image */}
-                    <img 
-                        src="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765915572/JJ-removebg-preview_vzq6uz.png" 
-                        alt="Comparativa" 
-                        className="w-full h-auto object-contain relative z-10 drop-shadow-2xl"
+        {/* Container for cases */}
+        <div className="max-w-6xl mx-auto mt-12 grid md:grid-cols-2 gap-8">
+            {/* Case 1: Restaurant/Local */}
+            <div className="relative w-full">
+                    <BeforeAfterSlider 
+                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921007/WhatsApp_Image_2025-12-16_at_22.34.24_nurbit.jpg"
+                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921006/WhatsApp_Image_2025-12-16_at_22.34.24_1_i2vqwk.jpg"
                     />
-                    
-                    {/* Top Label - Manual Search */}
-                    <div className="absolute top-[5%] inset-x-0 flex justify-center z-20">
-                        <span className="bg-gray-900/90 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-md border border-white/10 shadow-lg">
-                            SIN EXPOSITOR
-                        </span>
-                    </div>
+            </div>
 
-                    {/* Bottom Button - Instant Card */}
-                    <div className="absolute bottom-[8%] inset-x-0 flex justify-center z-20">
-                         {/* CHANGING THIS DIV TO MATCH THE TOP SPAN STYLE */}
-                         <div className="bg-gray-900/90 text-white text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-md border border-white/10 shadow-lg flex items-center gap-2 transform hover:scale-105 transition-transform">
-                            <Zap className="w-3 h-3 md:w-4 md:h-4 text-yellow-400 fill-yellow-400" />
-                            ESTRATEGIA + RESEÑAS
-                         </div>
-                    </div>
-                </div>
-           </div>
+            {/* Case 2: Profesional/Freelance */}
+            <div className="relative w-full">
+                    <BeforeAfterSlider 
+                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921774/WhatsApp_Image_2025-12-16_at_22.34.24_2_xc4xdd.jpg"
+                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921773/WhatsApp_Image_2025-12-16_at_22.40.40_ybpgfz.jpg"
+                    />
+            </div>
 
         </div>
       </div>
