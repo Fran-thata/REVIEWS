@@ -19,7 +19,12 @@ import {
   EyeOff,
   Smartphone,
   QrCode,
-  ArrowRight
+  ArrowRight,
+  Link,
+  GraduationCap,
+  HeartHandshake,
+  Compass,
+  FileText
 } from 'lucide-react';
 
 // --- Custom Animations Style Component ---
@@ -135,12 +140,13 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, title }: BeforeAfterSlider
     if (isResizing) handleMove(e.clientX);
   };
   
-  // Touch support
+  // Touch support for dragging
   const onTouchMove = (e: React.TouchEvent) => {
+    // We handle the actual logic here if React event fires, 
+    // but the native listener below ensures the page scroll is blocked.
     handleMove(e.touches[0].clientX);
   };
 
-  // Allow clicking anywhere to jump
   const onClick = (e: React.MouseEvent) => {
      handleMove(e.clientX);
   };
@@ -156,6 +162,26 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, title }: BeforeAfterSlider
     };
   }, []);
 
+  // --- NUEVO BLOQUEO NUCLEAR DE SCROLL ---
+  // Este efecto añade un listener nativo 'touchmove' con { passive: false }
+  // para permitir e.preventDefault(), lo que congela el scroll de la página 
+  // mientras el dedo se mueve sobre el slider.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const preventScroll = (e: TouchEvent) => {
+      if (e.cancelable) {
+        e.preventDefault(); // Bloquea el scroll de la página
+      }
+    };
+
+    container.addEventListener('touchmove', preventScroll, { passive: false });
+    return () => {
+      container.removeEventListener('touchmove', preventScroll);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col gap-6 w-full">
       {title && (
@@ -167,7 +193,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, title }: BeforeAfterSlider
       <div 
         ref={containerRef}
         className="relative w-full aspect-video select-none group cursor-ew-resize overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white/10 touch-none"
-        style={{ touchAction: 'none' }}
+        style={{ touchAction: 'none' }} 
         onMouseMove={onMouseMove}
         onMouseDown={onMouseDown}
         onTouchMove={onTouchMove}
@@ -621,18 +647,39 @@ export const ServiceIncluded: React.FC = () => {
   return (
     <section className="py-24 bg-brand-900 border-t border-white/5 relative">
       <div className="container mx-auto px-4">
-        <SectionTitle>Todo incluido. Sin sorpresas.</SectionTitle>
-        <SectionSubtitle>Tu inversión es única. Nuestro servicio es completo.</SectionSubtitle>
+        <SectionTitle>No compras un expositor. Contratas un servicio llave en mano</SectionTitle>
+        <SectionSubtitle>Todo está pensado para que funcione desde el primer día y tú no tengas que pelearte con nada.</SectionSubtitle>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div className="flex flex-wrap justify-center gap-6 mt-12">
           {[
-            { icon: <Settings className="w-6 h-6" />, title: "Configuración", desc: "Enlazamos tu ficha. Llega listo." },
-            { icon: <CreditCard className="w-6 h-6" />, title: "Pago Único", desc: "Sin cuotas mensuales. Jamás." },
-            { icon: <Smartphone className="w-6 h-6" />, title: "Sin Apps", desc: "Tus clientes no instalan nada." },
-            { icon: <ShieldCheck className="w-6 h-6" />, title: "Garantía", desc: "Soporte y reposición ante fallos." }
+            { 
+              icon: <Settings className="w-6 h-6" />, 
+              title: "Configuración lista para usar", 
+              desc: "Llega enlazada a tu ficha de google. Sin tocar nada técnico." 
+            },
+            { 
+              icon: <Users className="w-6 h-6" />, 
+              title: "Formación adaptada a tu negocio", 
+              desc: "Te enseñamos a pedir reseñas de forma natural, sin incomodar. Online o presencial en Valencia." 
+            },
+            { 
+              icon: <ShieldCheck className="w-6 h-6" />, 
+              title: "Acompañamiento en los primeros días", 
+              desc: "La primera semana revisamos contigo cómo usarlo, e integrarlo en la rutina del negocio. No te dejamos solo." 
+            },
+            { 
+              icon: <EyeOff className="w-6 h-6" />, 
+              title: "Prevención de reseñas negativas", 
+              desc: "Aprendes a detectar y resolver la insatisfacción antes de que se convierta en una reseña negativa." 
+            },
+            { 
+              icon: <Layout className="w-6 h-6" />, 
+              title: "Material de apoyo y trato directo", 
+              desc: "Guías claras, ejemplos reales y soporte humano. No bots." 
+            }
           ].map((item, i) => (
-             <div key={i} className="bg-brand-800 p-6 rounded-2xl border border-white/5 hover:border-brand-500/30 transition-all shadow-lg group">
-                <div className="bg-brand-950/50 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-brand-400 group-hover:text-white group-hover:scale-110 transition-all">
+             <div key={i} className="bg-brand-800 p-6 rounded-2xl border border-white/5 transition-all duration-300 shadow-lg group w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] hover:-translate-y-2 hover:scale-[1.05] hover:shadow-2xl hover:shadow-brand-500/20 hover:border-brand-400 hover:z-10 relative">
+                <div className="bg-brand-950/50 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-brand-400 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                   {item.icon}
                 </div>
                 <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
@@ -650,55 +697,79 @@ export const Pricing: React.FC = () => {
     <section id="pricing" className="py-24 bg-brand-950 relative border-t border-white/5">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[100px] -mr-40 -mt-40 pointer-events-none"></div>
       <div className="container mx-auto px-4 relative z-10">
-        <SectionTitle>Elige tu Pack</SectionTitle>
-        <SectionSubtitle>Invierte una vez, recibe reseñas para siempre.</SectionSubtitle>
+        <SectionTitle>Elige cómo multiplicar tus reseñas. (pago único)</SectionTitle>
+        <SectionSubtitle>Pagas una sola vez. Es tuyo para siempre.</SectionSubtitle>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12 mb-16">
             {/* Card 1 */}
             <div className="bg-brand-900 rounded-[2rem] p-8 border border-white/5 flex flex-col relative group hover:border-brand-500/30 transition-all">
-                <h3 className="text-2xl font-bold text-white mb-2">Tarjeta Digital</h3>
-                <p className="text-brand-200 text-sm mb-6">Para profesionales en movimiento.</p>
-                <div className="text-4xl font-extrabold text-white mb-6">39€<span className="text-lg font-normal text-brand-300">/único</span></div>
+                <h3 className="text-2xl font-bold text-white mb-2">Tarjeta Profesional</h3>
+                <div className="text-4xl font-extrabold text-white mb-4">50 €<span className="text-lg font-normal text-brand-300">/único</span></div>
                 
-                <ul className="space-y-4 mb-8 flex-grow">
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Tecnología NFC Contactless</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Código QR de respaldo</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Material PVC Duradero</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Configuración incluida</li>
-                </ul>
-                <WhatsappButton text="Pedir Tarjeta" variant="outline" className="w-full" />
+                <p className="text-brand-100 font-medium leading-relaxed mb-4">
+                  Tarjeta premium con acabado mate negro.
+                </p>
+                <p className="text-brand-200 text-sm leading-relaxed">
+                  Pensada para profesionales por cita: salud, bienestar, imagen y servicios 1 a 1.
+                </p>
             </div>
 
             {/* Card 2 - Featured */}
             <div className="bg-brand-800 rounded-[2rem] p-8 border-2 border-brand-500 shadow-2xl flex flex-col relative transform md:-translate-y-4">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow-lg">Más Vendido</div>
-                <h3 className="text-2xl font-bold text-white mb-2">Expositor Mostrador</h3>
-                <p className="text-brand-200 text-sm mb-6">Tu imán de reseñas automático.</p>
-                <div className="text-4xl font-extrabold text-white mb-6">49€<span className="text-lg font-normal text-brand-300">/único</span></div>
+                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow-lg">Más Popular</div>
+                <h3 className="text-2xl font-bold text-white mb-2">Expositor para mostrador</h3>
+                <div className="text-4xl font-extrabold text-white mb-4">50 €<span className="text-lg font-normal text-brand-300">/único</span></div>
                 
-                <ul className="space-y-4 mb-8 flex-grow">
-                    <li className="flex items-center gap-3 text-white text-sm font-medium"><CheckCircle className="w-5 h-5 text-green-400" /> Todo lo de la tarjeta</li>
-                    <li className="flex items-center gap-3 text-white text-sm font-medium"><CheckCircle className="w-5 h-5 text-green-400" /> Diseño Metacrilato Premium</li>
-                    <li className="flex items-center gap-3 text-white text-sm font-medium"><CheckCircle className="w-5 h-5 text-green-400" /> Adhesivo 3M incluido</li>
-                    <li className="flex items-center gap-3 text-white text-sm font-medium"><CheckCircle className="w-5 h-5 text-green-400" /> Visible para todo cliente</li>
-                </ul>
-                <WhatsappButton text="Pedir Expositor" variant="primary" className="w-full" />
+                <p className="text-white font-medium leading-relaxed mb-4">
+                  Expositor listo para usar.
+                </p>
+                <p className="text-brand-100 text-sm leading-relaxed">
+                  Ideal si tienes un punto de cobro o atención al cliente.
+                </p>
             </div>
 
             {/* Card 3 */}
             <div className="bg-brand-900 rounded-[2rem] p-8 border border-white/5 flex flex-col relative group hover:border-brand-500/30 transition-all">
-                <h3 className="text-2xl font-bold text-white mb-2">Pack Negocio</h3>
-                <p className="text-brand-200 text-sm mb-6">Equipa todo tu local.</p>
-                <div className="text-4xl font-extrabold text-white mb-6">79€<span className="text-lg font-normal text-brand-300">/único</span></div>
+                <h3 className="text-2xl font-bold text-white mb-2">Pack completo</h3>
+                <div className="text-4xl font-extrabold text-white mb-4">150 €<span className="text-lg font-normal text-brand-300">/único</span></div>
                 
-                <ul className="space-y-4 mb-8 flex-grow">
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> 1x Expositor Mostrador</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> 1x Tarjeta NFC</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Envío Prioritario Gratis</li>
-                    <li className="flex items-center gap-3 text-brand-100 text-sm"><CheckCircle className="w-5 h-5 text-brand-500" /> Soporte Premium</li>
-                </ul>
-                <WhatsappButton text="Pedir Pack Completo" variant="outline" className="w-full" />
+                <p className="text-brand-100 font-medium leading-relaxed mb-4">
+                  Un expositor + dos tarjetas para tu equipo.
+                </p>
+                <p className="text-brand-200 text-sm leading-relaxed">
+                  Ideal si tienes varios empleados o atención directa.
+                </p>
             </div>
+        </div>
+
+        {/* Todo incluido Section */}
+        <div className="max-w-4xl mx-auto bg-brand-900/50 rounded-[2.5rem] p-8 md:p-12 border border-white/5 shadow-xl">
+             <h3 className="text-2xl md:text-3xl font-bold text-white mb-10 text-center">Todo incluido en el precio</h3>
+             <div className="grid md:grid-cols-2 gap-x-8 gap-y-6 max-w-3xl mx-auto mb-10">
+                 {[
+                   { icon: Link, text: "Configurado y enlazado" },
+                   { icon: Zap, text: "Listo para usar" },
+                   { icon: GraduationCap, text: "Formación para pedir reseñas de forma natural" },
+                   { icon: HeartHandshake, text: "Acompañamiento inicial" },
+                   { icon: Compass, text: "Estrategia para integrarlo en tu día a día" },
+                   { icon: FileText, text: "Material de apoyo" },
+                 ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-4 text-lg text-brand-100">
+                        <div className="shrink-0 p-2.5 bg-brand-950 rounded-xl border border-brand-700 shadow-inner">
+                            <item.icon className="w-5 h-5 text-brand-400" />
+                        </div>
+                        <span className="mt-1.5">{item.text}</span>
+                    </div>
+                 ))}
+                 <div className="md:col-span-2 flex items-center gap-3 text-lg text-white font-bold bg-brand-800/50 p-4 rounded-xl border border-white/10 justify-center mt-4">
+                     <CheckCircle className="w-6 h-6 text-green-400 shrink-0" />
+                     <span>Pago único. Sin cuotas. Sin letra pequeña.</span>
+                 </div>
+             </div>
+             
+             <div className="flex justify-center">
+                 <WhatsappButton text="Preguntar por expositor o pack" className="text-lg px-10 py-5 w-full md:w-auto shadow-2xl hover:scale-105" variant="brand" />
+             </div>
         </div>
       </div>
     </section>

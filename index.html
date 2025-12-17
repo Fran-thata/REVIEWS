@@ -2,7 +2,8 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#172554" />
     <title>Potencia tus Reseñas en Google - Placa NFC y QR</title>
     <meta name="description" content="Expositor físico con placa NFC y código QR para conseguir más reseñas en Google de forma automática." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,12 +37,23 @@
       }
     </script>
     <style>
-      html, body {
+      html {
+        background-color: #172554;
+        overscroll-behavior: none;
+      }
+      body {
         font-family: 'Montserrat', sans-serif;
-        background-color: #172554; /* Color de fondo igual al tema oscuro */
-        overscroll-behavior: none; /* Bloquea el rebote elástico en móviles */
-        overflow-x: hidden; /* Evita desplazamiento horizontal */
+        background-color: #172554;
+        color: white;
+        margin: 0;
+        padding: 0;
+        overscroll-behavior: none;
         width: 100%;
+        min-height: 100vh;
+      }
+      #root {
+        background-color: #172554;
+        min-height: 100vh;
       }
       /* Smooth scrolling for anchor links */
       html {
