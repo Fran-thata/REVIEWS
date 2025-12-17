@@ -203,10 +203,10 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, title }: BeforeAfterSlider
         <img 
           src={afterImage}
           alt="Después" 
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
         {/* After Label - z-10 */}
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
+        <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
           DESPUÉS
         </div>
 
@@ -218,9 +218,9 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, title }: BeforeAfterSlider
           <img 
             src={beforeImage}
             alt="Antes" 
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-top"
           />
-          <div className="absolute top-4 left-4 bg-brand-600/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
+          <div className="absolute top-2 left-2 bg-brand-600/90 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 z-10 pointer-events-none">
             ANTES
           </div>
         </div>
@@ -624,8 +624,8 @@ export const SocialProof: React.FC = () => {
             {/* Case 1: Restaurant/Local */}
             <div className="relative w-full">
                     <BeforeAfterSlider 
-                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921774/WhatsApp_Image_2025-12-16_at_22.34.24_2_xc4xdd.jpg"
-                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765921773/WhatsApp_Image_2025-12-16_at_22.40.40_ybpgfz.jpg"
+                        beforeImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765980461/WhatsApp_Image_2025-12-16_at_22.34.24_2_xc4xdd.png"
+                        afterImage="https://res.cloudinary.com/ddpujsrsg/image/upload/v1765980171/WhatsApp_Image_2025-12-16_at_22.40.40_ybpgfz.png"
                     />
             </div>
 
